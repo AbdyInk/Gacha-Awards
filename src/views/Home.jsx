@@ -19,10 +19,9 @@ function Home() {
   return (
     <div className="home-container" style={{ fontFamily: 'Bickham Script Pro, cursive' }}>
       <Heading as="h2" size="lg" mb={4} color="yellow.100" style={{ fontFamily: 'Bickham Script Pro, cursive' }}>Trailer</Heading>
-      <div className="video-container" style={{ textAlign: 'center', marginBottom: '20px', border: "4px solid #E18106" }}>
+      <div className="video-container" style={{ textAlign: 'center', marginBottom: '20px', border: "4px solid #E18106", outline: "4px solid #7B4300" }}>
         <iframe 
-          width="480" 
-          height="260" 
+          style={{ width: '100%', height: '100%' }}
           src="https://www.youtube.com/embed/NrMy5MhMncM?si=bS74TQ9zBLsykUyS" 
           title="YouTube video player" 
           frameBorder="0" 
@@ -30,25 +29,35 @@ function Home() {
           allowFullScreen>
         </iframe>
       </div>
-      <Heading as="h1" size="xl" mb={6} color="yellow.100" style={{ fontFamily: 'Bickham Script Pro, cursive' }}>Organizadores</Heading>
-      <Flex justifyContent="center" alignItems="center" gap={6} direction={{ base: 'column', md: 'row' }} mb={6}>
-        <Flex alignItems="center" justifyContent="center" width="37vh" height="9vh" border={"6px solid #E69001"} borderRadius="10vh" bg="#FFCC4D" color="white">
-          <Avatar name="ChepeTuber" src="https://yt3.googleusercontent.com/kAp4qSrNgtz3hIgBMdlhG9BqZdPTGdYEc82BGpTmUchTj2KBc17hBdApCgGMlEzZPxrbT2sXTw=s160-c-k-c0x00ffffff-no-rj" size="md" />
-          <span style={{ fontSize: '24px', marginLeft: '8px' }}>@ChepeTuber</span>
+      <Heading as="h1" size="xl" mb={4} color="yellow.100" style={{ fontFamily: 'Bickham Script Pro, cursive' }}>Organizadores</Heading>
+      <Flex justifyContent="center" alignItems="center" gap={4} direction={{ base: 'column', sm: 'row' }} mb={6}>
+        <Flex className="Bolp">
+          <Avatar className="ytAvatar" name="ChepeTuber" src="https://yt3.googleusercontent.com/zFOeL8raiUzqapMZABQV8giPlw2wnab6FwY7xVwtTbum1p_CCkug9-rDvqEM7pDNOyOhws-oPg=s160-c-k-c0x00ffffff-no-rj" size="md" />
+          <span>@ChepeTuber</span>
         </Flex>
-        <Flex alignItems="center" justifyContent="center" width="37vh" height="9vh" border={"6px solid #E69001"} borderRadius="10vh" bg="#FFCC4D" color="white">
-          <Avatar name="ChepeTuber" src="https://yt3.googleusercontent.com/kAp4qSrNgtz3hIgBMdlhG9BqZdPTGdYEc82BGpTmUchTj2KBc17hBdApCgGMlEzZPxrbT2sXTw=s160-c-k-c0x00ffffff-no-rj" size="md" />
-          <span style={{ fontSize: '24px', marginLeft: '8px' }}>@ChepeTuber</span>
+        <Flex className="Bolp">
+          <Avatar className="ytAvatar" name="ChepeTuber" src="https://yt3.googleusercontent.com/sUMerluKvWYjKRRj2X5dAnDoj9O07own8KV2d5bHWxOZX348Pp9cWDtpEhEk2AaaHMDXz4yj3A=s160-c-k-c0x00ffffff-no-rj" size="md" />
+          <span>@alexftsxd</span>
         </Flex>
       </Flex>
-      <Flex justifyContent="center" alignItems="center" gap={6} direction={{ base: 'column', md: 'row' }}>
-      <Flex alignItems="center" justifyContent="center" width="37vh" height="9vh" border={"6px solid #E69001"} borderRadius="10vh" bg="#FFCC4D" color="white">
-          <Avatar name="ChepeTuber" src="https://yt3.googleusercontent.com/kAp4qSrNgtz3hIgBMdlhG9BqZdPTGdYEc82BGpTmUchTj2KBc17hBdApCgGMlEzZPxrbT2sXTw=s160-c-k-c0x00ffffff-no-rj" size="md" />
-          <span style={{ fontSize: '24px', marginLeft: '8px' }}>@ChepeTuber</span>
+      <Flex justifyContent="center" alignItems="center" gap={4} direction={{ base: 'column', sm: 'row' }} mb={6}>
+        <Flex className="Bolp">
+          <Avatar className="ytAvatar" name="ChepeTuber" src="https://yt3.googleusercontent.com/zFOeL8raiUzqapMZABQV8giPlw2wnab6FwY7xVwtTbum1p_CCkug9-rDvqEM7pDNOyOhws-oPg=s160-c-k-c0x00ffffff-no-rj" size="md" />
+          <span>@ChepeTuber</span>
         </Flex>
-        <Flex alignItems="center" justifyContent="center" width="37vh" height="9vh" border={"6px solid #E69001"} borderRadius="10vh" bg="#FFCC4D" color="white">
-          <Avatar name="ChepeTuber" src="https://yt3.googleusercontent.com/kAp4qSrNgtz3hIgBMdlhG9BqZdPTGdYEc82BGpTmUchTj2KBc17hBdApCgGMlEzZPxrbT2sXTw=s160-c-k-c0x00ffffff-no-rj" size="md" />
-          <span style={{ fontSize: '24px', marginLeft: '8px' }}>@ChepeTuber</span>
+        <Flex className="Bolp">
+          <Avatar className="ytAvatar" name="ChepeTuber" src="https://yt3.googleusercontent.com/sUMerluKvWYjKRRj2X5dAnDoj9O07own8KV2d5bHWxOZX348Pp9cWDtpEhEk2AaaHMDXz4yj3A=s160-c-k-c0x00ffffff-no-rj" size="md" />
+          <span>@alexftsxd</span>
+        </Flex>
+      </Flex>
+      <Flex justifyContent="center" alignItems="center" gap={4} direction={{ base: 'column', sm: 'row' }} mb={6}>
+        <Flex className="Bolp">
+          <Avatar className="ytAvatar" name="ChepeTuber" src="https://yt3.googleusercontent.com/zFOeL8raiUzqapMZABQV8giPlw2wnab6FwY7xVwtTbum1p_CCkug9-rDvqEM7pDNOyOhws-oPg=s160-c-k-c0x00ffffff-no-rj" size="md" />
+          <span>@ChepeTuber</span>
+        </Flex>
+        <Flex className="Bolp">
+          <Avatar className="ytAvatar" name="ChepeTuber" src="https://yt3.googleusercontent.com/sUMerluKvWYjKRRj2X5dAnDoj9O07own8KV2d5bHWxOZX348Pp9cWDtpEhEk2AaaHMDXz4yj3A=s160-c-k-c0x00ffffff-no-rj" size="md" />
+          <span>@alexftsxd</span>
         </Flex>
       </Flex>
     </div>

@@ -54,7 +54,7 @@ function Header() {
   const isAllowedUser = user && allowedEmails.includes(user.email);
 
   return (
-    <Box bg="orange.400" p={4}>
+    <Box bg="orange.400" p={2} style={{borderBottom: "2vh solid #C95F0E"}}>
       <Flex alignItems="center" justifyContent="space-between">
         <Flex boxSize="50px" width={"180px"}>
           <img src={logo} alt="Logo" style={{ height: '100%', width: '190vh' }} />
@@ -67,20 +67,24 @@ function Header() {
           </Button>
           {user && (
             <>
+            <div style={{ width: "4px", backgroundColor: '#C95F0E', marginRight: "2vh" }} />
               <Button as={Link} to="/voting" colorScheme="gray" variant="ghost" mr={4}>
                 <MdHowToVote />
                 Votar
               </Button>
+            <div style={{ width: "4px", backgroundColor: '#C95F0E', marginRight: "2vh" }} />
               <Button as={Link} to="/results" colorScheme="gray" variant="ghost" mr={4}>
                 <MdLibraryAddCheck />
                 Resultados
               </Button>
               {isAllowedUser && (
                 <>
+                <div style={{ width: "4px", backgroundColor: '#C95F0E', marginRight: "2vh" }} />
                   <Button as={Link} to="/create-section" colorScheme="gray" variant="ghost" mr={4}>
                     <HiDocumentAdd />
                     Crear Categoria
                   </Button>
+                <div style={{ width: "4px", backgroundColor: '#C95F0E', marginRight: "2vh" }} />
                   <Button as={Link} to="/edit-section" colorScheme="gray" variant="ghost" mr={4}>
                     <FaEdit />
                     Editar Formulario
