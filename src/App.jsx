@@ -8,6 +8,7 @@ import CreateSection from './views/CreateSection';
 import EditSection from './views/EditSection';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import NotFound from './views/NotFound'; // Import the NotFound component
 import "./App.css";
 import 'aos/dist/aos.css';
 import "animate.css";
@@ -38,8 +39,9 @@ function App() {
           <Route path="/results" element={<VoteResults />} />
           <Route path="/create-section" element={<CreateSection />} />
           <Route path="/edit-section" element={<EditSection />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
-        <Footer />
+        
       </Box>
     </ChakraProvider>
   );

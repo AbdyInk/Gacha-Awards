@@ -20,11 +20,13 @@ body, html, #root {
 .home-background {
   background-color: black;
   background-repeat: no-repeat;
-  background-image: url('./assets/bg.jpeg');
-  background-size: 90% 100%;
+  background-image: url('./assets/bgHome.webp');
+  background-size: 100% 100%;
   background-position: center;
   background-attachment: fixed;
 }
+
+
 
 .voting-background {
   background-color: black;

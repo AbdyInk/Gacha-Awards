@@ -8,7 +8,7 @@ import { FaHome, FaBars, FaEdit } from 'react-icons/fa';
 import { MdHowToVote, MdLibraryAddCheck, MdOutlineLogout, MdOutlineLogin  } from "react-icons/md";
 import { HiDocumentAdd } from "react-icons/hi";
 
-const allowedEmails = ['abdyxx@gmail.com'];
+const allowedEmails = ['abdyxx@gmail.com', 'jdglezsosa@gmail.com'];
 import logo from '../assets/logoGA.png';
 
 function Header() {
@@ -54,38 +54,48 @@ function Header() {
   const isAllowedUser = user && allowedEmails.includes(user.email);
 
   return (
-    <Box bg="orange.400" p={2} style={{borderBottom: "2vh solid #C95F0E"}}>
+    <Box bg="orange.400" p={2} style={{borderBottom: "1vh solid #C95F0E"}}>
       <Flex alignItems="center" justifyContent="space-between">
-        <Flex boxSize="50px" width={"180px"}>
-          <img src={logo} alt="Logo" style={{ height: '100%', width: '190vh' }} />
+        <Flex boxSize="60px" width={"180px"}>
+          <img src={logo} alt="Logo" style={{ position: "relative", marginLeft: "6vh", height: '120%', width: '20vh' }} />
         </Flex>
         <Spacer />
         <Box display={{ base: 'none', lg: 'flex' }} flex="1" justifyContent="center">
-          <Button as={Link} to="/" colorScheme="gray" variant="ghost" mr={4}>
+          <Button as={Link} to="/" colorScheme="gray" variant="ghost" mr={4} 
+            bg={location.pathname === '/' ? 'yellow.300' : 'transparent'}
+          >
             <FaHome />
             Home
           </Button>
           {user && (
             <>
             <div style={{ width: "4px", backgroundColor: '#C95F0E', marginRight: "2vh" }} />
-              <Button as={Link} to="/voting" colorScheme="gray" variant="ghost" mr={4}>
+              <Button as={Link} to="/voting" colorScheme="gray" variant="ghost" mr={4}
+                bg={location.pathname === '/voting' ? 'yellow.300' : 'transparent'}
+              >
                 <MdHowToVote />
                 Votar
               </Button>
             <div style={{ width: "4px", backgroundColor: '#C95F0E', marginRight: "2vh" }} />
-              <Button as={Link} to="/results" colorScheme="gray" variant="ghost" mr={4}>
+              <Button as={Link} to="/results" colorScheme="gray" variant="ghost" mr={4}
+                bg={location.pathname === '/results' ? 'yellow.300' : 'transparent'}
+              >
                 <MdLibraryAddCheck />
                 Resultados
               </Button>
               {isAllowedUser && (
                 <>
                 <div style={{ width: "4px", backgroundColor: '#C95F0E', marginRight: "2vh" }} />
-                  <Button as={Link} to="/create-section" colorScheme="gray" variant="ghost" mr={4}>
+                  <Button as={Link} to="/create-section" colorScheme="gray" variant="ghost" mr={4}
+                    bg={location.pathname === '/create-section' ? 'yellow.300' : 'transparent'}
+                  >
                     <HiDocumentAdd />
                     Crear Categoria
                   </Button>
                 <div style={{ width: "4px", backgroundColor: '#C95F0E', marginRight: "2vh" }} />
-                  <Button as={Link} to="/edit-section" colorScheme="gray" variant="ghost" mr={4}>
+                  <Button as={Link} to="/edit-section" colorScheme="gray" variant="ghost" mr={4}
+                    bg={location.pathname === '/edit-section' ? 'yellow.300' : 'transparent'}
+                  >
                     <FaEdit />
                     Editar Formulario
                   </Button>
@@ -130,7 +140,7 @@ function Header() {
               <MenuItem onClick={user ? handleLogout : handleLogin}>
                 {user ? (
                   <>
-                    <MdOutlineLogout />
+             marginLeft: "10vh",        <MdOutlineLogout />
                     Logout
                   </>
                 ) : (
