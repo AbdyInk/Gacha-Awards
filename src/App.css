@@ -20,7 +20,7 @@ body, html, #root {
 .home-background {
   background-color: black;
   background-repeat: no-repeat;
-  background-image: url('./assets/bgHome.webp');
+  background-image: url('./assets/bg/bgHome.webp');
   background-size: 100% 100%;
   background-position: center;
   background-attachment: fixed;
@@ -31,7 +31,7 @@ body, html, #root {
 .voting-background {
   background-color: black;
   background-repeat: no-repeat;
-  background-image: url('./assets/bgVoting.jpg');
+  background-image: url('./assets/bg/bgVoting.jpg');
   background-size: 100% 100%;
   background-position: center;
   background-attachment: fixed;
@@ -52,4 +52,10 @@ body, html, #root {
 .transition-screen.hidden {
   opacity: 0;
   pointer-events: none;
+}
+
+@media (max-width: 478px) {
+  .home-background{
+    background-size: 300% 100%;
+  }
 }
