@@ -11,32 +11,40 @@
     src: url('../assets/HolenVintage.otf') format('opentype');
 }
 
-.VoteBox {
+.welcomeCard, .VoteBox{
+    width: 30%;
+    background-color: #DADADA;
+    height: 20vh;
+    font-weight:bolder;
+    border-bottom: 0.5vh solid #C12000;
+    border-right: 0.5vh solid #C12000;
+}
+
+.VoteBox{
+    margin-top: -1vh;
+    height: auto;
+}
+
+.header{
+    text-transform: uppercase;
+    width: 100%;
+    color: #fff;
+}
+.container{
+    font-size: 21px;
+    height: auto;
+    width: 95%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: 10px;
-    padding: 40px;
-    border: 1px solid black;
-    border-radius: 10px;
-    background-color: #FDF7C6;
-    background-size: 100%;
-    width: 50%; /* Ajusta el tamaño del recuadro al 70% del contenedor */
-    font-family: 'HolenVintage', Arial, sans-serif;
-
-    /* Media query para pantallas más pequeñas */
-    @media (max-width: 768px) {
-        width: 75%; /* Ajusta el tamaño del recuadro al 80% del contenedor en pantallas medianas */
-    }
-
-    @media (max-width: 480px) {
-        width: 99%; /* Ajusta el tamaño del recuadro al 99% del contenedor en pantallas pequeñas */
-    }
+    border-bottom: 0.5vh solid #ED8936;
 }
 
+
+
 .ImageOption{
-    height: 200px;
-    width: 200px;
+    position: relative;
+    display: flex;
 }
 
 .votedCard {
@@ -60,16 +68,23 @@ input[type="radio"] {
     outline: none;
     cursor: pointer;
     position: relative;
+    border-top: 0;
+
+    border-right: 0; 
+    border-color: rgba(0, 0, 0, 0.648);
 }
 
 input[type="radio"]:checked {
-    border-color: #4caf50;
-    background-color: #4caf50;
+    border-top: 0;
+    border-right: 0; 
+    border-color: rgba(0, 0, 0, 0.619);
+    background-color: #FFD400;
+    border-radius: 50%;
 }
 
 input[type="radio"]:checked::before {
     font-family: Arial, sans-serif;
-    content: '✔';
+    content: '';
     display: flex;
     justify-content: center;
     align-items: center;

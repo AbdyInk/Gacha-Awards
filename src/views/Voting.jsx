@@ -2,10 +2,11 @@ import { useState, useEffect, useRef } from 'react';
 import { auth, db } from '../Firebase/firebaseConfig';
 import { useNavigate } from 'react-router-dom';
 import { collection, getDoc, doc, addDoc, query, where, getDocs } from 'firebase/firestore';
-import { useToast, Box, Flex, Heading, Stack, Button, Text, Image, useDisclosure, AlertDialog, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, AlertDialogContent, AlertDialogOverlay, Spacer, Center } from '@chakra-ui/react';
+import { useToast, Box, Flex, Heading, Stack, Button, Text, Image, useDisclosure, AlertDialog, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, AlertDialogContent, AlertDialogOverlay, Spacer, Center, Avatar } from '@chakra-ui/react';
 import LoadingToast from '../components/LoadingToast';
 
 import "../styles/Voting.css";
+import { transform } from 'framer-motion';
 
 function Voting() {
   const [isLoading, setIsLoading] = useState(true);
@@ -89,36 +90,62 @@ function Voting() {
         <>
           {hasVoted ? (
             <Center height="80vh">
-            <Box className="votedCard" textAlign="center" p={10} borderWidth="1px" borderRadius="lg" boxShadow="lg">
-              <Heading as="h2" size="xl" mb={4}>¡Gracias por tus votaciones!</Heading>
-              <Text fontSize="lg">Te esperamos el 00/00/0000 (fecha provisional) para los resultados</Text>
-            </Box>
-          </Center>
+              <Box className="votedCard" textAlign="center" p={10} borderWidth="1px" borderRadius="lg" boxShadow="lg">
+                <Heading as="h2" size="xl" mb={4}>¡Gracias por tus votaciones!</Heading>
+                <Text fontSize="lg">Te esperamos el 00/00/0000 (fecha provisional) para los resultados</Text>
+              </Box>
+            </Center>
           ) : (
             <div className="Voting-Container">
-              <Heading textColor={"red"} as="h1" size="xl" mb={4}>Vota Gacha Awards 2024</Heading>
-              {form && form.sections && Object.keys(form.sections).map((sectionKey, index) => (
-                <Box className="VoteBox" key={index} borderWidth="1px" borderRadius="lg" mb={4}>
-                  <Heading as="h2" size="lg" mb={4}>{sectionKey}- {form.sections[sectionKey].title}</Heading>
-                  <p>{form.sections[sectionKey].description}</p>
-                  <Stack spacing={4}>
-                    {form.sections[sectionKey].options.map((option, idx) => (
-                      <Box key={idx}>
-                        <label>
-                          <input
-                            type="radio"
-                            name={`section-${index}`}
-                            value={option.text}
-                            checked={votes[sectionKey] === option.text}
-                            onChange={() => handleOptionChange(sectionKey, option.text)}
-                          />
-                          <Text as="span" ml={2}>{option.text}</Text>
-                        </label>
-                        {option.imageUrl && <Image className="ImageOption" src={option.imageUrl} alt={option.text} mt={2} />}
-                      </Box>
-                    ))}
-                  </Stack>
+              <Flex className="welcomeCard" mt={4} textAlign="center" direction={"column"}>
+                <div className="header">
+                  <Heading bg={"#ED8936"} as="h5" size="md">Bienvenido</Heading>
+                </div>
+                <Box alignContent={"center"} className="container" style={{width: "70%", height: "100%"}}>
+                  <Text fontSize="2xl">Elige sabiamente a tus gachatuber favoritos</Text>
                 </Box>
+              </Flex>
+              
+              <div style={{width: "20vh", background: "white", border: "1px solid white", margin: "2vh 0" }}></div>
+              {form && form.sections && Object.keys(form.sections).map((sectionKey, index) => (
+                <>
+                  <Box className="VoteBox" key={index} direction={"column"}>
+                    <div className="header">
+                      <Heading p={1} bg={"#ED8936"} textAlign="center" as="h2" size="md">{form.sections[sectionKey].title}</Heading>
+                    </div>
+                    <div className="container">
+                      <p>● {form.sections[sectionKey].description}:</p>
+                      <div style={{width: "50%", background: "#816B76", border: "1.5px solid #816B76", margin: "-2vh 0 1vh 0" }}></div>
+                      <Stack style={{textTransform: "uppercase"}} spacing={0}>
+                        {form.sections[sectionKey].options.map((option, idx) => (
+                          <Box key={idx} position="relative">
+                            <label>
+                              <input
+                                type="radio"
+                                name={`section-${index}`}
+                                value={option.text}
+                                checked={votes[sectionKey] === option.text}
+                                onChange={() => handleOptionChange(sectionKey, option.text)}
+                              />
+                              <Text as="span" ml={2} color={votes[sectionKey] === option.text ? "#FF6A00" : "inherit"}>
+                                {option.text}
+                              </Text>
+                            </label>
+                          </Box>
+                        ))}
+                      </Stack>
+                      <div style={{width: "50%", background: "#816B76", border: "1.5px solid #816B76", margin: "0 0 1vh 0" }}></div>
+                      {form.sections[sectionKey].options.map((option, idx) => (
+                        option.imageUrl && votes[sectionKey] === option.text && (
+                          <Box position="relative">
+                          <Avatar key={idx} className="ImageOption" src={option.imageUrl} alt={option.text} mt={2} position="absolute" right="0" />
+                          </Box>
+                        )
+                      ))}
+                    </div>
+                  </Box>
+                  <div style={{width: "20vh", background: "white", border: "1px solid white", margin: "2vh 0" }}></div>
+                </>
               ))}
               <Button colorScheme="blue" onClick={onOpen}>Submit Votes</Button>
               

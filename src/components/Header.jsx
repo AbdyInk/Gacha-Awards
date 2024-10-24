@@ -65,7 +65,7 @@ function Header() {
             bg={location.pathname === '/' ? 'yellow.300' : 'transparent'}
           >
             <FaHome />
-            Home
+            Inicio
           </Button>
           {user && (
             <>
@@ -111,7 +111,7 @@ function Header() {
             <MenuList>
               <MenuItem as={Link} to="/">
                 <FaHome />
-                Home
+                Inicio
               </MenuItem>
               {user && (
                 <>
