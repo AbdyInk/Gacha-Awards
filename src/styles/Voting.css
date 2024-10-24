@@ -2,9 +2,36 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     font-family: Arial, sans-serif;
   }
+
+.SubContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    width:66vh;
+    height: 85vh;
+    overflow-y: auto;
+}
+
+.SubContainer::-webkit-scrollbar {
+    width: 1vh;
+}
+
+.SubContainer::-webkit-scrollbar-track {
+    background: #b8b8b8;
+    border-radius: 10px;
+}
+
+.SubContainer::-webkit-scrollbar-thumb {
+    background: #666666;
+    border-radius: 10px;
+}
+
+.SubContainer::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
 
 @font-face {
     font-family: 'HolenVintage';
@@ -12,17 +39,19 @@
 }
 
 .welcomeCard, .VoteBox{
-    width: 30%;
+    width: 94%;
     background-color: #DADADA;
-    height: 20vh;
+    height: auto;
     font-weight:bolder;
     border-bottom: 0.5vh solid #C12000;
     border-right: 0.5vh solid #C12000;
 }
 
 .VoteBox{
+
     margin-top: -1vh;
     height: auto;
+    justify-content: center;
 }
 
 .header{

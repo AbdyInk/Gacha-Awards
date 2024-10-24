@@ -1,0 +1,135 @@
+.Results-Container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+.Results-SubContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    width: 66vh;
+    height: 85vh;
+    overflow-y: auto;
+}
+
+.Results-SubContainer::-webkit-scrollbar {
+    width: 1vh;
+}
+
+.Results-SubContainer::-webkit-scrollbar-track {
+    background: #b8b8b8;
+    border-radius: 10px;
+}
+
+.Results-SubContainer::-webkit-scrollbar-thumb {
+    background: #666666;
+    border-radius: 10px;
+}
+
+.Results-SubContainer::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+@font-face {
+    font-family: 'HolenVintage';
+    src: url('../assets/HolenVintage.otf') format('opentype');
+}
+
+.congratsCard, .Results-VoteBox {
+    width: 92%;
+    background-color: #eeeeee;
+    height: auto;
+    font-weight: bolder;
+    border-bottom: 0.5vh solid #c1ab00;
+    border-right: 0.5vh solid #c1ab00;
+}
+
+.Results-VoteBox {
+    margin-top: -1vh;
+    height: auto;
+}
+
+.Results-Header {
+    text-transform: uppercase;
+    width: 100%;
+    color: #fff;
+}
+
+.rContainer {
+    font-size: 21px;
+    height: auto;
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-bottom: 0.5vh solid #F6E05E;
+}
+
+.Results-ImageOption {
+    position: relative;
+    display: flex;
+}
+
+.Results-VotedCard {
+    background-image: url("../assets/bgVoted.jpg");
+    background-size: 100% 100%;
+    height: 26vh;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    border-top: 0;
+    border-right: 0;
+    border-color: rgba(0, 0, 0, 0.648);
+}
+
+input[type="radio"]:checked {
+    border-top: 0;
+    border-right: 0;
+    border-color: rgba(0, 0, 0, 0.619);
+    background-color: #38A169;
+    border-radius: 50%;
+}
+
+input[type="radio"]:checked::before {
+    font-family: Arial, sans-serif;
+    content: '';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 16px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@media (max-width: 768px) {
+    .congratsCard, .Results-VoteBox{
+        transform: scale(0.72);
+    }
+    .Results-VoteBox{
+        margin-top: 0;
+    }
+    .separo{
+        transform: scale(0.72);
+        margin: 0 0;
+    }
+}

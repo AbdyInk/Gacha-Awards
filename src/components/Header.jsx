@@ -5,7 +5,7 @@ import { auth, provider } from '../Firebase/firebaseConfig';
 import { signInWithPopup, signInWithRedirect, signOut, getRedirectResult } from 'firebase/auth';
 
 import { FaHome, FaBars, FaEdit } from 'react-icons/fa';
-import { MdHowToVote, MdLibraryAddCheck, MdOutlineLogout, MdOutlineLogin  } from "react-icons/md";
+import { MdHowToVote, MdLibraryAddCheck, MdOutlineLogout, MdOutlineLogin, MdBarChart  } from "react-icons/md";
 import { HiDocumentAdd } from "react-icons/hi";
 
 const allowedEmails = ['abdyxx@gmail.com', 'jdglezsosa@gmail.com'];

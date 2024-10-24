@@ -20,12 +20,15 @@ function App() {
   useEffect(() => {
     if (location.pathname === '/') {
       document.body.classList.add('home-background');
-      document.body.classList.remove('voting-background');
+      document.body.classList.remove('voting-background', 'results-background');
     } else if (location.pathname === '/voting') {
       document.body.classList.add('voting-background');
-      document.body.classList.remove('home-background');
-    } else {
+      document.body.classList.remove('home-background', 'results-background');
+    } else if (location.pathname === '/results') {
+      document.body.classList.add('results-background');
       document.body.classList.remove('home-background', 'voting-background');
+    } else {
+      document.body.classList.remove('home-background', 'voting-background', 'results-background');
     }
   }, [location.pathname]);
 

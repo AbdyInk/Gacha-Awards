@@ -1,33 +1,45 @@
-import { useState, useEffect } from 'react';
-import { Box, Heading, Text, Stack, useToast } from '@chakra-ui/react';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../Firebase/firebaseConfig';
+import { useState, useEffect, useRef } from 'react';
+import { auth, db } from '../Firebase/firebaseConfig';
+import { useNavigate } from 'react-router-dom';
+import { collection, getDoc, doc, getDocs } from 'firebase/firestore';
+import { useToast, Box, Flex, Heading, Text, Avatar, Progress } from '@chakra-ui/react';
+import LoadingToast from '../components/LoadingToast';
+
+import "../styles/Results.css";
 
 function Results() {
-  const [voteCounts, setVoteCounts] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [votes, setVotes] = useState({});
+  const [user, setUser] = useState(null);
+  const [form, setForm] = useState(null);
+  const [voteCounts, setVoteCounts] = useState({});
+  const navigate = useNavigate();
   const toast = useToast();
 
   useEffect(() => {
-    const fetchVoteCounts = async () => {
-      try {
-        const counts = await countVotes();
-        setVoteCounts(counts);
-      } catch (error) {
-        toast({
-          title: 'Error al cargar los resultados',
-          description: 'Hubo un problema al cargar los resultados de la votación. Por favor, inténtalo de nuevo más tarde.',
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-          position: 'top',
-        });
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUser(user);
+        loadForm();
+        fetchVoteCounts();
+      } else {
+        navigate('/');
       }
-    };
+    });
 
-    fetchVoteCounts();
-  }, [toast]);
+    return () => unsubscribe();
+  }, [navigate]);
 
-  const countVotes = async () => {
+  const loadForm = async () => {
+    const docRef = doc(db, 'formulario', 'form1');
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      setForm(docSnap.data());
+    }
+    setIsLoading(false);
+  };
+
+  const fetchVoteCounts = async () => {
     const voteCounts = {};
     const querySnapshot = await getDocs(collection(db, 'votes'));
     querySnapshot.forEach((doc) => {
@@ -43,27 +55,106 @@ function Results() {
         voteCounts[section].options[option] += 1;
       });
     });
-    return voteCounts;
+    setVoteCounts(voteCounts);
   };
 
-  if (!voteCounts) {
-    return <div>Loading...</div>;
-  }
+  const getMaxVotedOption = (sectionKey) => {
+    if (!voteCounts[sectionKey]) return null;
+    const options = voteCounts[sectionKey].options;
+    return Object.keys(options).reduce((a, b) => options[a] > options[b] ? a : b);
+  };
 
+  useEffect(() => {
+    if (form && form.sections) {
+      const initialVotes = {};
+      Object.keys(form.sections).forEach((sectionKey) => {
+        const maxVotedOption = getMaxVotedOption(sectionKey);
+        if (maxVotedOption) {
+          initialVotes[sectionKey] = maxVotedOption;
+        }
+      });
+      setVotes(initialVotes);
+    }
+  }, [form, voteCounts]);
+
+  const calculatePercentage = (optionVotes, totalVotes) => {
+    if (totalVotes === 0) return 0;
+    return (optionVotes / totalVotes) * 100;
+  };
+  
   return (
-    <Box>
-      <Heading as="h1" size="xl" mb={4}>Vote Results</Heading>
-      {Object.keys(voteCounts).sort().map(section => (
-        <Box key={section} borderWidth="1px" borderRadius="lg" p={4} mb={4}>
-          <Heading as="h2" size="lg" mb={4}>{section} - {voteCounts[section].title}</Heading>
-          <Stack spacing={2}>
-            {Object.keys(voteCounts[section].options).map(option => (
-              <Text key={option}>{option}: {voteCounts[section].options[option]}</Text>
-            ))}
-          </Stack>
-        </Box>
-      ))}
-    </Box>
+    <>
+      <LoadingToast isLoading={isLoading} />
+      {isLoading ? null : (
+        <div className="Results-Container">
+          <Flex mt={3} className="Results-SubContainer">
+            <Flex className="congratsCard" mt={4} textAlign="center" direction={"column"}>
+              <div className="Results-Header">
+                <Heading bg={"#FFC950"} as="h5" size="md">GANADORES</Heading>
+              </div>
+              <Box justifyContent={"center"} className="container" borderBottom={"0.5vh solid #F6E05E"}>
+                <Text fontSize="2xl">¡Felicidades a los gachatuber de este año 2024!</Text>
+              </Box>
+            </Flex>
+  
+            <div className='separo' style={{width: "22vh", background: "white", border: "1px solid white"}}></div>
+            {form && form.sections && Object.keys(form.sections).map((sectionKey, index) => {
+              const totalVotes = Object.values(voteCounts[sectionKey]?.options || {}).reduce((acc, count) => acc + count, 0);
+              return (
+                <>
+                <Box className="Results-VoteBox" key={index} direction={"column"}>
+                  <div className="Results-Header">
+                    <Heading p={1} bg={"#FFC950"} textAlign="center" as="h2" size="md">{form.sections[sectionKey].title}</Heading>
+                  </div>
+                  <div className="container" style={{borderBottom: "0.5vh solid #F6E05E"}}>
+                    <Flex style={{textTransform: "uppercase"}} direction="row">
+                      <Box width={"100%"}>
+                        {form.sections[sectionKey].options.map((option, idx) => {
+                          const optionVotes = voteCounts[sectionKey]?.options[option.text] || 0;
+                          const percentage = calculatePercentage(optionVotes, totalVotes);
+                            return (
+                            <Box mb={-3} key={idx} position="relative">
+                              <label>
+                              <input
+                                type="radio"
+                                name={`section-${index}`}
+                                value={option.text}
+                                checked={votes[sectionKey] === option.text}
+                                disabled={votes[sectionKey] === option.text}
+                              />
+                              <Text as="span" ml={2} color={votes[sectionKey] === option.text ? "#38A169" : "inherit"}>
+                                ➤ {option.text}
+                              </Text>
+                              </label>
+                              <Flex justifyContent={"center"} mb={-5}>
+                              <Progress width={"90%"} value={percentage} size="sm" bg={"gray.600"} colorScheme="green" />
+                              <Text ml={1} mt={-1} fontSize={"xs"}>{percentage.toFixed(0)}%</Text>
+                              </Flex>
+                              <Text textTransform={"capitalize"} fontSize={"xs"} ml={6} color="gray.500">{optionVotes} - Votos</Text>
+                            </Box>
+                            );
+                        })}
+                      </Box>
+                      {form.sections[sectionKey].options.map((option, idx) => (
+                        option.imageUrl && votes[sectionKey] === option.text && (
+                          <Flex direction={"column"} alignItems={"center"} justifyContent={"center"} textAlign={"center"} width={"40%"} key={idx}>
+                            <Text fontSize={"lg"} color={"gray"}><em>GANADOR:</em></Text>
+                            <Avatar mt={-4} size={"xl"} className="Results-ImageOption" src={option.imageUrl} alt={option.text}/>
+                            <Text fontSize={"sm"} color={"gray.750"} >{option.text}</Text>
+                          </Flex>
+                        )
+                      ))}
+                    </Flex>
+                  </div>
+                </Box>
+                
+                </>
+              );
+            })}
+          </Flex>
+        </div>
+      )}
+    </>
   );
 }
 

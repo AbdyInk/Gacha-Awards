@@ -14,6 +14,7 @@ function Voting() {
   const [user, setUser] = useState(null);
   const [hasVoted, setHasVoted] = useState(false);
   const [form, setForm] = useState(null);
+  const [preloadedImages, setPreloadedImages] = useState({});
   const navigate = useNavigate();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -97,84 +98,89 @@ function Voting() {
             </Center>
           ) : (
             <div className="Voting-Container">
-              <Flex className="welcomeCard" mt={4} textAlign="center" direction={"column"}>
-                <div className="header">
-                  <Heading bg={"#ED8936"} as="h5" size="md">Bienvenido</Heading>
-                </div>
-                <Box alignContent={"center"} className="container" style={{width: "70%", height: "100%"}}>
-                  <Text fontSize="2xl">Elige sabiamente a tus gachatuber favoritos</Text>
-                </Box>
-              </Flex>
-              
-              <div style={{width: "20vh", background: "white", border: "1px solid white", margin: "2vh 0" }}></div>
-              {form && form.sections && Object.keys(form.sections).map((sectionKey, index) => (
-                <>
-                  <Box className="VoteBox" key={index} direction={"column"}>
-                    <div className="header">
-                      <Heading p={1} bg={"#ED8936"} textAlign="center" as="h2" size="md">{form.sections[sectionKey].title}</Heading>
-                    </div>
-                    <div className="container">
-                      <p>● {form.sections[sectionKey].description}:</p>
-                      <div style={{width: "50%", background: "#816B76", border: "1.5px solid #816B76", margin: "-2vh 0 1vh 0" }}></div>
-                      <Stack style={{textTransform: "uppercase"}} spacing={0}>
-                        {form.sections[sectionKey].options.map((option, idx) => (
-                          <Box key={idx} position="relative">
-                            <label>
-                              <input
-                                type="radio"
-                                name={`section-${index}`}
-                                value={option.text}
-                                checked={votes[sectionKey] === option.text}
-                                onChange={() => handleOptionChange(sectionKey, option.text)}
-                              />
-                              <Text as="span" ml={2} color={votes[sectionKey] === option.text ? "#FF6A00" : "inherit"}>
-                                {option.text}
-                              </Text>
-                            </label>
-                          </Box>
-                        ))}
-                      </Stack>
-                      <div style={{width: "50%", background: "#816B76", border: "1.5px solid #816B76", margin: "0 0 1vh 0" }}></div>
-                      {form.sections[sectionKey].options.map((option, idx) => (
-                        option.imageUrl && votes[sectionKey] === option.text && (
-                          <Box position="relative">
-                          <Avatar key={idx} className="ImageOption" src={option.imageUrl} alt={option.text} mt={2} position="absolute" right="0" />
-                          </Box>
-                        )
-                      ))}
-                    </div>
+              <Flex mt={3} className='SubContainer'>
+                <Flex className="welcomeCard" mt={4} textAlign="center" direction={"column"}>
+                  <div className="header">
+                    <Heading bg={"#ED8936"} as="h5" size="md">Bienvenido</Heading>
+                  </div>
+                  <Box alignContent={"center"} className="container">
+                    <Text fontSize="2xl">Elige sabiamente a tus gachatuber favoritos</Text>
                   </Box>
-                  <div style={{width: "20vh", background: "white", border: "1px solid white", margin: "2vh 0" }}></div>
-                </>
-              ))}
-              <Button colorScheme="blue" onClick={onOpen}>Submit Votes</Button>
-              
-              <AlertDialog
-                isOpen={isOpen}
-                leastDestructiveRef={cancelRef}
-                onClose={onClose}
-              >
-                <AlertDialogOverlay>
-                  <AlertDialogContent>
-                    <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                      Confirmar Votos
-                    </AlertDialogHeader>
+                </Flex>
 
-                    <AlertDialogBody>
-                      ¿Estás seguro de que quieres enviar tus votos? <Text textColor={"red"}>No podrás cambiarlos después.</Text>
-                    </AlertDialogBody>
+                <div style={{width: "22vh", background: "white", border: "1px solid white", margin: "2vh 0" }}></div>
+                {form && form.sections && Object.keys(form.sections).map((sectionKey, index) => (
+                  <>
+                    <Box className="VoteBox" key={index} direction={"column"}>
+                      <div className="header">
+                        <Heading p={1} bg={"#ED8936"} textAlign="center" as="h2" size="md">{form.sections[sectionKey].title}</Heading>
+                      </div>
+                      <div className="container">
+                        <p>● {form.sections[sectionKey].description}:</p>
+                        <div style={{width: "66%", background: "#816B76", border: "1.5px solid #816B76", margin: "-2vh 0 1vh 0" }}></div>
+                        <Flex style={{textTransform: "uppercase"}} direction="row">
+                          <Box width={"120%"}>
+                          {form.sections[sectionKey].options.map((option, idx) => (
+                            <Box key={idx} position="relative">
+                              <label>
+                                <input
+                                  type="radio"
+                                  name={`section-${index}`}
+                                  value={option.text}
+                                  checked={votes[sectionKey] === option.text}
+                                  onChange={() => handleOptionChange(sectionKey, option.text)}
+                                />
+                                <Text as="span" ml={2} color={votes[sectionKey] === option.text ? "#FF6A00" : "inherit"}>
+                                ➤ {option.text}
+                                </Text>
+                              </label>
+                            </Box>
+                          ))}
+                          </Box>
+                          {form.sections[sectionKey].options.map((option, idx) => (
+                          option.imageUrl && votes[sectionKey] === option.text && (
+                            <Box textAlign={"center"} width={"40%"}>
+                              <Avatar size={"xl"} key={idx} className="ImageOption" src={option.imageUrl} alt={option.text}/>
+                              <span>Lol</span>
+                            </Box>
+                          )
+                          ))}
+                        </Flex>
+                        <div style={{width: "66%", background: "#816B76", border: "1.5px solid #816B76", margin: "0 0 1vh 0" }}></div>
+                      </div>
+                    </Box>
+                    <div style={{width: "20vh", background: "white", border: "1px solid white", margin: "2vh 0" }}></div>
+                  </>
+                ))}
+                <Button colorScheme="blue" onClick={onOpen}>Submit Votes</Button>
 
-                    <AlertDialogFooter>
-                      <Button ref={cancelRef} onClick={onClose}>
-                        Cancelar
-                      </Button>
-                      <Button colorScheme="blue" onClick={handleSubmit} ml={3}>
-                        Confirmar
-                      </Button>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialogOverlay>
-              </AlertDialog>
+                <AlertDialog
+                  isOpen={isOpen}
+                  leastDestructiveRef={cancelRef}
+                  onClose={onClose}
+                >
+                  <AlertDialogOverlay>
+                    <AlertDialogContent>
+                      <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                        Confirmar Votos
+                      </AlertDialogHeader>
+
+                      <AlertDialogBody>
+                        ¿Estás seguro de que quieres enviar tus votos? <Text textColor={"red"}>No podrás cambiarlos después.</Text>
+                      </AlertDialogBody>
+
+                      <AlertDialogFooter>
+                        <Button ref={cancelRef} onClick={onClose}>
+                          Cancelar
+                        </Button>
+                        <Button colorScheme="blue" onClick={handleSubmit} ml={3}>
+                          Confirmar
+                        </Button>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialogOverlay>
+                </AlertDialog>
+              </Flex>
             </div>
           )}
         </>
