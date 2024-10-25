@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { db } from '../Firebase/firebaseConfig';
+import { db, storage } from '../Firebase/firebaseConfig';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { useNavigate } from 'react-router-dom';
 
 function EditSection() {
@@ -38,9 +39,9 @@ function EditSection() {
     setOptions(section.options);
   };
 
-  const handleOptionChange = (index, value) => {
+  const handleOptionChange = (index, field, value) => {
     const newOptions = [...options];
-    newOptions[index].text = value;
+    newOptions[index][field] = value;
     setOptions(newOptions);
   };
 
@@ -51,7 +52,7 @@ function EditSection() {
   };
 
   const handleAddOption = () => {
-    setOptions([...options, { text: '', image: null }]);
+    setOptions([...options, { text: '', image: null, arroba: '' }]);
   };
 
   const handleDeleteSection = async () => {
@@ -107,10 +108,21 @@ function EditSection() {
         }
 
         // Update section details
+        const optionsWithUrls = await Promise.all(options.map(async (option, index) => {
+          if (option.image) {
+            const imageRef = ref(storage, `sections/${newSectionNumber || selectedSection}/options/${index}`);
+            await uploadBytes(imageRef, option.image);
+            const imageUrl = await getDownloadURL(imageRef);
+            return { text: option.text, imageUrl, arroba: option.arroba };
+          } else {
+            return { text: option.text, arroba: option.arroba };
+          }
+        }));
+
         newSections[newSectionNumber || selectedSection] = {
           title: sectionTitle,
           description: sectionDescription,
-          options: options
+          options: optionsWithUrls
         };
 
         await updateDoc(formRef, { sections: newSections });
@@ -126,11 +138,11 @@ function EditSection() {
   };
 
   return (
-    <div>
-      <h1>Edit Section</h1>
-      <div>
-        <label>Select Section:</label>
-        <select value={selectedSection} onChange={handleSelectChange}>
+    <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px', border: '1px solid #ccc', borderRadius: '10px', boxShadow: '0 0 10px rgba(0,0,0,0.1)', overflow: 'auto', maxHeight: '80vh' }}>
+      <h1 style={{ textAlign: 'center', color: '#333' }}>Edit Section</h1>
+      <div style={{ marginBottom: '15px' }}>
+        <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Select Section:</label>
+        <select value={selectedSection} onChange={handleSelectChange} style={{ width: '100%', padding: '8px', borderRadius: '5px', border: '1px solid #ccc' }}>
           <option value="">Select a section</option>
           {Object.keys(sections).sort().map(section => (
             <option key={section} value={section}>{section}</option>
@@ -139,52 +151,64 @@ function EditSection() {
       </div>
       {selectedSection && (
         <form onSubmit={handleEditSection}>
-          <div>
-            <label>New Section Number:</label>
+          <div style={{ marginBottom: '15px' }}>
+            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>New Section Number:</label>
             <input
               type="text"
               value={newSectionNumber}
               onChange={(e) => setNewSectionNumber(e.target.value)}
+              style={{ width: '100%', padding: '8px', borderRadius: '5px', border: '1px solid #ccc' }}
             />
           </div>
-          <div>
-            <label>Section Title:</label>
+          <div style={{ marginBottom: '15px' }}>
+            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Section Title:</label>
             <input
               type="text"
               value={sectionTitle}
               onChange={(e) => setSectionTitle(e.target.value)}
+              style={{ width: '100%', padding: '8px', borderRadius: '5px', border: '1px solid #ccc' }}
             />
           </div>
-          <div>
-            <label>Section Description:</label>
+          <div style={{ marginBottom: '15px' }}>
+            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Section Description:</label>
             <input
               type="text"
               value={sectionDescription}
               onChange={(e) => setSectionDescription(e.target.value)}
+              style={{ width: '100%', padding: '8px', borderRadius: '5px', border: '1px solid #ccc' }}
             />
           </div>
-          <div>
-            <label>Options:</label>
+          <div style={{ marginBottom: '15px' }}>
+            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Options:</label>
             {options.map((option, index) => (
-              <div key={index}>
+              <div key={index} style={{ marginBottom: '10px' }}>
                 <input
                   type="text"
                   value={option.text}
-                  onChange={(e) => handleOptionChange(index, e.target.value)}
+                  onChange={(e) => handleOptionChange(index, 'text', e.target.value)}
+                  style={{ width: 'calc(100% - 110px)', padding: '8px', borderRadius: '5px', border: '1px solid #ccc', marginRight: '10px' }}
                 />
                 <input
                   type="file"
                   accept="image/*"
                   onChange={(e) => handleImageChange(index, e.target.files[0])}
+                  style={{ width: '100px' }}
+                />
+                <input
+                  type="text"
+                  placeholder="Arroba"
+                  value={option.arroba}
+                  onChange={(e) => handleOptionChange(index, 'arroba', e.target.value)}
+                  style={{ width: 'calc(100% - 110px)', padding: '8px', borderRadius: '5px', border: '1px solid #ccc', marginTop: '10px' }}
                 />
               </div>
             ))}
-            <button type="button" onClick={handleAddOption}>Add Option</button>
+            <button type="button" onClick={handleAddOption} style={{ padding: '10px 15px', borderRadius: '5px', border: 'none', backgroundColor: '#007BFF', color: '#fff', cursor: 'pointer' }}>Add Option</button>
           </div>
-          <button type="submit">Edit Section</button>
+          <button type="submit" style={{ width: '100%', padding: '10px 15px', borderRadius: '5px', border: 'none', backgroundColor: '#28a745', color: '#fff', cursor: 'pointer' }}>Edit Section</button>
         </form>
       )}
-      <button onClick={handleDeleteSection}>Delete Section</button>
+      <button onClick={handleDeleteSection} style={{ width: '100%', padding: '10px 15px', borderRadius: '5px', border: 'none', backgroundColor: '#dc3545', color: '#fff', cursor: 'pointer', marginTop: '10px' }}>Delete Section</button>
     </div>
   );
 }

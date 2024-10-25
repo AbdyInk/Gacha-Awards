@@ -97,59 +97,60 @@ function Results() {
               </Box>
             </Flex>
   
-            <div className='separo' style={{width: "22vh", background: "white", border: "1px solid white"}}></div>
+            <div style={{width: "22vh", background: "white", border: "1px solid white", margin: "2vh 0" }}></div>
             {form && form.sections && Object.keys(form.sections).map((sectionKey, index) => {
               const totalVotes = Object.values(voteCounts[sectionKey]?.options || {}).reduce((acc, count) => acc + count, 0);
-              return (
+                return (
                 <>
                 <Box className="Results-VoteBox" key={index} direction={"column"}>
                   <div className="Results-Header">
-                    <Heading p={1} bg={"#FFC950"} textAlign="center" as="h2" size="md">{form.sections[sectionKey].title}</Heading>
+                  <Heading p={1} bg={"#FFC950"} textAlign="center" as="h2" size="md">{form.sections[sectionKey].title}</Heading>
                   </div>
                   <div className="container" style={{borderBottom: "0.5vh solid #F6E05E"}}>
-                    <Flex style={{textTransform: "uppercase"}} direction="row">
-                      <Box width={"100%"}>
-                        {form.sections[sectionKey].options.map((option, idx) => {
-                          const optionVotes = voteCounts[sectionKey]?.options[option.text] || 0;
-                          const percentage = calculatePercentage(optionVotes, totalVotes);
-                            return (
-                            <Box mb={-3} key={idx} position="relative">
-                              <label>
-                              <input
-                                type="radio"
-                                name={`section-${index}`}
-                                value={option.text}
-                                checked={votes[sectionKey] === option.text}
-                                disabled={votes[sectionKey] === option.text}
-                              />
-                              <Text as="span" ml={2} color={votes[sectionKey] === option.text ? "#38A169" : "inherit"}>
-                                ➤ {option.text}
-                              </Text>
-                              </label>
-                              <Flex justifyContent={"center"} mb={-5}>
-                              <Progress width={"90%"} value={percentage} size="sm" bg={"gray.600"} colorScheme="green" />
-                              <Text ml={1} mt={-1} fontSize={"xs"}>{percentage.toFixed(0)}%</Text>
-                              </Flex>
-                              <Text textTransform={"capitalize"} fontSize={"xs"} ml={6} color="gray.500">{optionVotes} - Votos</Text>
-                            </Box>
-                            );
-                        })}
+                  <Flex style={{textTransform: "uppercase"}} direction="row">
+                    <Box width={"100%"}>
+                    {form.sections[sectionKey].options.map((option, idx) => {
+                      const optionVotes = voteCounts[sectionKey]?.options[option.text] || 0;
+                      const percentage = calculatePercentage(optionVotes, totalVotes);
+                      return (
+                      <Box mb={-3} key={idx} position="relative">
+                        <label>
+                        <input
+                        className="winRadio"
+                        type="radio"
+                        name={`section-${index}`}
+                        value={option.text}
+                        checked={votes[sectionKey] === option.text}
+                        disabled={votes[sectionKey] === option.text}
+                        />
+                        <Text as="span" ml={2} color={votes[sectionKey] === option.text ? "#38A169" : "inherit"}>
+                        ➤ {option.text}
+                        </Text>
+                        </label>
+                        <Flex justifyContent={"center"} mb={-5}>
+                        <Progress width={"90%"} value={percentage} size="sm" bg={"gray.600"} colorScheme="green" />
+                        <Text ml={1} mt={-1} fontSize={"xs"}>{percentage.toFixed(0)}%</Text>
+                        </Flex>
+                        <Text textTransform={"capitalize"} fontSize={"xs"} ml={6} color="gray.500">{optionVotes} - Votos</Text>
                       </Box>
-                      {form.sections[sectionKey].options.map((option, idx) => (
-                        option.imageUrl && votes[sectionKey] === option.text && (
-                          <Flex direction={"column"} alignItems={"center"} justifyContent={"center"} textAlign={"center"} width={"40%"} key={idx}>
-                            <Text fontSize={"lg"} color={"gray"}><em>GANADOR:</em></Text>
-                            <Avatar mt={-4} size={"xl"} className="Results-ImageOption" src={option.imageUrl} alt={option.text}/>
-                            <Text fontSize={"sm"} color={"gray.750"} >{option.text}</Text>
-                          </Flex>
-                        )
-                      ))}
-                    </Flex>
+                      );
+                    })}
+                    </Box>
+                    {form.sections[sectionKey].options.map((option, idx) => (
+                    option.imageUrl && votes[sectionKey] === option.text && (
+                      <Flex direction={"column"} alignItems={"center"} justifyContent={"center"} textAlign={"center"} width={"40%"} key={idx}>
+                        <Text color={"gray"}><em>GANADOR:</em></Text>
+                        <Avatar mt={-4} size={"xl"} className="Results-ImageOption" src={option.imageUrl} alt={option.text}/>
+                        <Text fontSize={"sm"} >{option.text}</Text>
+                      </Flex>
+                    )
+                    ))}
+                  </Flex>
                   </div>
                 </Box>
-                
+                <div style={{width: "22vh", background: "white", border: "1px solid white", margin: "2vh 0" }}></div>
                 </>
-              );
+                );
             })}
           </Flex>
         </div>
