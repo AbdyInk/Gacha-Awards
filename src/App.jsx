@@ -52,7 +52,7 @@ function App() {
   return (
     <ChakraProvider>
       {isAuthorized && (
-      <Header />
+        <Header />
       )}
       <Routes>
         {!isAuthorized ? <Route path="/" element={<ComingSoon />} /> : (
