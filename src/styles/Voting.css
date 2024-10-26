@@ -37,6 +37,10 @@
     font-family: 'HolenVintage';
     src: url('../assets/HolenVintage.otf') format('opentype');
 }
+@font-face {
+    font-family: 'Eracake';
+    src: url('../assets/fonts/Eracake.otf') format('opentype');
+}
 
 .welcomeCard, .VoteBox{
     width: 94%;
@@ -76,7 +80,7 @@
 }
 
 .votedCard {
-    background-image: url("../assets/bgVoted.jpg");
+    background-color: orange;
     background-size: 100% 100%;
     height: 26vh;
     text-align: center;

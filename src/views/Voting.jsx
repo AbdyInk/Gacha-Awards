@@ -98,11 +98,12 @@ function Voting() {
       <LoadingToast isLoading={isLoading} />
       {isLoading ? null : (
         <>
-          {hasVoted ? (
+          {!hasVoted ? (
             <Center height="80vh">
-              <Box className="votedCard" textAlign="center" p={10} borderWidth="1px" borderRadius="lg" boxShadow="lg">
-                <Heading as="h2" size="xl" mb={4}>¡Gracias por tus votaciones!</Heading>
-                <Text fontSize="lg">Te esperamos el 00/00/0000 (fecha provisional) para los resultados</Text>
+              <Box bg={"yellow.400"} textAlign="center" p={10} borderWidth="1px" borderRadius="lg" boxShadow="lg">
+                <Heading as="h2" size="xl" mb={4}>¡Bienvenido a las votaciones!</Heading>
+                <Text fontSize="lg" mb={4}>Haz clic en el botón de abajo para comenzar el formulario.</Text>
+                <Button colorScheme="blue" onClick={() => navigate('/formulario')}>Comenzar el formulario</Button>
               </Box>
             </Center>
           ) : (

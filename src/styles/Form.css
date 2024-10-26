@@ -1,0 +1,141 @@
+.Form-Container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    width: 76vh;
+    height: auto;
+    overflow-y: auto;
+    text-align: center;
+    padding: 10px;
+    border-width: 1px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    margin: 20px;
+}
+
+.Form-Container::-webkit-scrollbar {
+    width: 1vh;
+}
+
+.Form-Container::-webkit-scrollbar-track {
+    background: #b8b8b8;
+    border-radius: 10px;
+}
+
+.Form-Container::-webkit-scrollbar-thumb {
+    background: #666666;
+    border-radius: 10px;
+}
+
+.Form-Container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+@font-face {
+    font-family: 'HolenVintage';
+    src: url('../assets/HolenVintage.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'Eracake';
+    src: url('../assets/fonts/Eracake.otf') format('opentype');
+}
+
+.Form-Container h2 {
+    text-transform: uppercase;
+    width: 100%;
+    color: #fff;
+    font-family: 'HolenVintage', Arial, sans-serif;
+}
+
+.Form-Container p {
+    font-size: 21px;
+    width: 94%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-bottom: 0.5vh solid #ED8936;
+}
+
+.Form-Container .ImageOption {
+    position: relative;
+    display: flex;
+}
+
+.Form-Container .votedCard {
+    background-color: orange;
+    background-size: 100% 100%;
+    height: 26vh;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    border-top: 0;
+    border-right: 0;
+    border-color: rgba(0, 0, 0, 0.648);
+}
+
+input[type="radio"]:checked {
+    border-top: 0;
+    border-right: 0;
+    border-color: rgba(0, 0, 0, 0.619);
+    background-color: #FFD400;
+    border-radius: 50%;
+}
+
+input[type="radio"]:checked::before {
+    font-family: Arial, sans-serif;
+    content: '';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 16px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.Form-Header {
+    background-color: #ED8936;
+    padding: 10px;
+    border-radius: 8px 8px 0 0;
+}
+
+.Form-Description {
+    margin: 10px 0;
+}
+
+.Form-Option {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.Form-Option input[type="radio"] {
+    margin-right: 10px;
+}
+
+.Form-Option-Image {
+    margin-top: 10px;
+}
+
+.Form-Button {
+    margin-top: 20px;
+}

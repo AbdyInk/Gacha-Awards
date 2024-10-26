@@ -194,6 +194,9 @@ function EditSection() {
                   onChange={(e) => handleImageChange(index, e.target.files[0])}
                   style={{ width: '100px' }}
                 />
+                {option.imageUrl && (
+                  <img src={option.imageUrl} alt="Option" style={{ width: '100px', height: '100px', objectFit: 'cover', marginTop: '10px' }} />
+                )}
                 <input
                   type="text"
                   placeholder="Arroba"

@@ -8,7 +8,7 @@ import { FaHome, FaBars, FaEdit } from 'react-icons/fa';
 import { MdHowToVote, MdLibraryAddCheck, MdOutlineLogout, MdOutlineLogin, MdBarChart  } from "react-icons/md";
 import { HiDocumentAdd } from "react-icons/hi";
 
-const allowedEmails = ['abdyxx@gmail.com', 'jdglezsosa@gmail.com'];
+const allowedEmails = ['abdyxx@gmail.com', 'jdglezsosa@gmail.com', 'twodiobdoeh@gmail.com'];
 import logo from '../assets/logoGA.png';
 
 function Header() {
@@ -70,15 +70,15 @@ function Header() {
           {user && (
             <>
             <div style={{ width: "4px", backgroundColor: '#C95F0E', marginRight: "2vh" }} />
-              <Button as={Link} to="/voting" colorScheme="gray" variant="ghost" mr={4}
-                bg={location.pathname === '/voting' ? 'yellow.300' : 'transparent'}
+              <Button as={Link} to="/votar" colorScheme="gray" variant="ghost" mr={4}
+                bg={location.pathname === '/votar' ? 'yellow.300' : 'transparent'}
               >
                 <MdHowToVote />
                 Votar
               </Button>
             <div style={{ width: "4px", backgroundColor: '#C95F0E', marginRight: "2vh" }} />
-              <Button as={Link} to="/results" colorScheme="gray" variant="ghost" mr={4}
-                bg={location.pathname === '/results' ? 'yellow.300' : 'transparent'}
+              <Button as={Link} to="/resultados" colorScheme="gray" variant="ghost" mr={4}
+                bg={location.pathname === '/resultados' ? 'yellow.300' : 'transparent'}
               >
                 <MdLibraryAddCheck />
                 Resultados
@@ -115,11 +115,11 @@ function Header() {
               </MenuItem>
               {user && (
                 <>
-                  <MenuItem as={Link} to="/voting">
+                  <MenuItem as={Link} to="/votar">
                     <MdHowToVote />
                     Votar
                   </MenuItem>
-                  <MenuItem as={Link} to="/results">
+                  <MenuItem as={Link} to="/resultados">
                     <MdLibraryAddCheck />
                     Resultados
                   </MenuItem>

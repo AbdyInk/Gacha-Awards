@@ -59,7 +59,7 @@ function CreateSection() {
           }
         });
         alert('Section added successfully!');
-        navigate('/voting');
+        navigate('/votar');
       } else {
         console.error('Form not found');
       }
@@ -70,7 +70,7 @@ function CreateSection() {
   };
 
   return (
-    <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px', border: '1px solid #ccc', borderRadius: '10px', boxShadow: '0 0 10px rgba(0,0,0,0.1)', overflow: 'auto', maxHeight: '80vh' }}>
+    <div style={{ maxWidth: '720px', margin: '0 auto', padding: '20px', border: '1px solid #ccc', borderRadius: '10px', boxShadow: '0 0 10px rgba(0,0,0,0.1)', overflow: 'auto', maxHeight: '80vh' }}>
       <h1 style={{ textAlign: 'center', color: '#333' }}>Create New Section</h1>
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: '15px' }}>
