@@ -6,7 +6,6 @@ import { useToast, Box, Flex, Heading, Stack, Button, Text, Image, useDisclosure
 import LoadingToast from '../components/LoadingToast';
 
 import "../styles/Voting.css";
-import { transform } from 'framer-motion';
 
 function Voting() {
   const [isLoading, setIsLoading] = useState(true);
@@ -14,11 +13,8 @@ function Voting() {
   const [user, setUser] = useState(null);
   const [hasVoted, setHasVoted] = useState(false);
   const [form, setForm] = useState(null);
-  const [preloadedImages, setPreloadedImages] = useState({});
   const navigate = useNavigate();
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const cancelRef = useRef();
   const toast = useToast();
 
   useEffect(() => {
@@ -40,7 +36,10 @@ function Voting() {
     const querySnapshot = await getDocs(q);
     if (!querySnapshot.empty) {
       setHasVoted(true);
+      const userVotes = querySnapshot.docs[0].data().votes;
+      setVotes(userVotes);
     }
+    setIsLoading(false);
   };
 
   const loadForm = async () => {
@@ -49,40 +48,7 @@ function Voting() {
     if (docSnap.exists()) {
       setForm(docSnap.data());
     }
-    setIsLoading(false);
   };
-
-  const handleOptionChange = (sectionIndex, optionText) => {
-    setVotes((prevVotes) => ({
-      ...prevVotes,
-      [sectionIndex]: optionText,
-    }));
-  };
-
-  const handleSubmit = async () => {
-    // Check if all fields are filled
-    const allFieldsFilled = form && Object.keys(form.sections).every(sectionKey => votes[sectionKey]);
-    if (!allFieldsFilled) {
-      toast({
-        title: 'Campos incompletos',
-        description: 'Por favor, rellena todos los campos antes de enviar.',
-        status: 'warning',
-        duration: 5000,
-        isClosable: true,
-        position: 'top',
-      });
-      onClose();
-      return;
-    }
-
-    await addDoc(collection(db, 'votes'), {
-      email: user.email,
-      votes,
-    });
-    setHasVoted(true);
-    onClose();
-  };
-
 
   const [expandedSections, setExpandedSections] = useState({});
 
@@ -103,7 +69,7 @@ function Voting() {
               <Box bg={"yellow.400"} textAlign="center" p={10} borderWidth="1px" borderRadius="lg" boxShadow="lg">
                 <Heading as="h2" size="xl" mb={4}>¡Bienvenido a las votaciones!</Heading>
                 <Text fontSize="lg" mb={4}>Haz clic en el botón de abajo para comenzar el formulario.</Text>
-                <Button colorScheme="blue" onClick={() => navigate('/formulario')}>Comenzar el formulario</Button>
+                <Button colorScheme="blue" onClick={() => navigate('/form')}>Comenzar el formulario</Button>
               </Box>
             </Center>
           ) : (
@@ -111,89 +77,82 @@ function Voting() {
               <Flex mt={3} className='SubContainer'>
                 <Flex className="welcomeCard" mt={4} textAlign="center" direction={"column"}>
                   <div className="header">
-                    <Heading bg={"#ED8936"} as="h5" size="md">Bienvenido</Heading>
+                    <Heading bg={"#ED8936"} as="h5" size="md">VOTOS</Heading>
                   </div>
                   <Box alignContent={"center"} className="container">
-                    <Text fontSize="2xl">Elige sabiamente a tus gachatuber favoritos</Text>
+                    <Text fontSize="2xl">Aqui un resumen de tus votos realizados</Text>
                   </Box>
                 </Flex>
 
                 <div style={{width: "22vh", background: "white", border: "1px solid white", margin: "2vh 0" }}></div>
                 {form && form.sections && Object.keys(form.sections).map((sectionKey, index) => (
                   <>
-                  <Box className="VoteBox" key={index} direction={"column"}>
-                    <div className="header">
-                      <Heading p={1} bg={"#ED8936"} textAlign="center" as="h2" size="md">{form.sections[sectionKey].title}</Heading>
-                    </div>
-                    <div className="container">
-                      <Flex><p>● {expandedSections[sectionKey] ? form.sections[sectionKey].description : `${form.sections[sectionKey].description.substring(0, 100)}...`}</p>
-                        <Button size="sm" onClick={() => toggleSection(sectionKey)}>
-                          {expandedSections[sectionKey] ? 'Ver menos' : 'Ver más'}
-                        </Button>
-                      </Flex>
-                      <div style={{width: "66%", background: "#816B76", border: "1.5px solid #816B76", margin: "-2vh 0 1vh 0" }}></div>
-                      <Flex style={{textTransform: "uppercase"}} direction="row">
-                        <Box width={"120%"}>
+                    <Box className="VoteBox" key={index} direction={"column"}>
+                      <div className="header">
+                        <Heading p={1} bg={"#ED8936"} textAlign="center" as="h2" size="md">{form.sections[sectionKey].title}</Heading>
+                      </div>
+                      <div className="container">
+                        
+                        <div style={{width: "66%", background: "#816B76", border: "1.5px solid #816B76", margin: "0 0 1vh 0" }}></div>
+                        <Flex style={{textTransform: "uppercase"}} direction="row">
+                          <Box width={"120%"}>
+                            {form.sections[sectionKey].options.map((option, idx) => (
+                              <Box key={idx} position="relative">
+                                <label>
+                                  <input
+                                    type="radio"
+                                    name={`section-${index}`}
+                                    value={option.text}
+                                    checked={votes[sectionKey] === option.text}
+                                    readOnly
+                                  />
+                                  <Text as="span" ml={2} color={votes[sectionKey] === option.text ? "#FF6A00" : "inherit"}>
+                                    ➤ {option.text}
+                                  </Text>
+                                </label>
+                              </Box>
+                            ))}
+                          </Box>
                           {form.sections[sectionKey].options.map((option, idx) => (
-                            <Box key={idx} position="relative">
-                              <label>
-                                <input
-                                  type="radio"
-                                  name={`section-${index}`}
-                                  value={option.text}
-                                  checked={votes[sectionKey] === option.text}
-                                  onChange={() => handleOptionChange(sectionKey, option.text)}
-                                />
-                                <Text as="span" ml={2} color={votes[sectionKey] === option.text ? "#FF6A00" : "inherit"}>
-                                  ➤ {option.text}
-                                </Text>
-                              </label>
-                            </Box>
+                            option.imageUrl && votes[sectionKey] === option.text && (
+                              <Flex
+                                direction={"column"}
+                                alignItems={"center"}
+                                justifyContent={"center"}
+                                textAlign={"center"}
+                                width={"40%"}
+                                key={idx}
+                              >
+                                {option.imageType === 'Avatar' ? (
+                                  <Avatar size={"xl"} className="ImageOption" src={option.imageUrl} alt={option.text} />
+                                ) : (
+                                  <img className="ImageOption" src={option.imageUrl} alt={option.text} style={{ width: '100%', height: 'auto', borderRadius: '8px' }} />
+                                )}
+                                {option.arroba && (
+                                  <Text
+                                    fontSize={"lg"}
+                                    textAlign={"center"}
+                                    textTransform={"none"}
+                                    textDecoration={"underline"}
+                                    color={"red.500"}
+                                    _hover={{ color: "orange.700" }}
+                                  >
+                                    @{option.arroba}
+                                  </Text>
+                                )}
+                                {option.description && (
+                                  <Text fontSize={"lg"} textAlign={"center"} textTransform={"none"}>{option.description}</Text>
+                                )}
+                              </Flex>
+                            )
                           ))}
-                        </Box>
-                        {form.sections[sectionKey].options.map((option, idx) => (
-                          option.imageUrl && votes[sectionKey] === option.text && (
-                            <Flex direction={"column"} alignItems={"center"} justifyContent={"center"} textAlign={"center"} width={"40%"} key={idx}>
-                              <Avatar size={"xl"} className="ImageOption" src={option.imageUrl} alt={option.text}/>
-                              <Text fontSize={"sm"} textAlign={"center"} textTransform={"none"}>@{option.arroba}</Text>
-                            </Flex>
-                          )
-                        ))}
-                      </Flex>
-                      <div style={{width: "66%", background: "#816B76", border: "1.5px solid #816B76", margin: "0 0 1vh 0" }}></div>
-                    </div>
-                  </Box>
-                  <div style={{width: "22vh", background: "white", border: "1px solid white", margin: "2vh 0" }}></div>
-                  </>
+                        </Flex>
+                        <div style={{width: "66%", background: "#816B76", border: "1.5px solid #816B76", margin: "0 0 1vh 0" }}></div>
+                      </div>
+                    </Box>
+                    <div style={{width: "22vh", background: "white", border: "1px solid white", margin: "2vh 0" }}></div>
+                    </>
                 ))}
-                <Button colorScheme="blue" onClick={onOpen}>Submit Votes</Button>
-
-                <AlertDialog
-                  isOpen={isOpen}
-                  leastDestructiveRef={cancelRef}
-                  onClose={onClose}
-                >
-                  <AlertDialogOverlay>
-                    <AlertDialogContent>
-                      <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                        Confirmar Votos
-                      </AlertDialogHeader>
-
-                      <AlertDialogBody>
-                        ¿Estás seguro de que quieres enviar tus votos? <Text textColor={"red"}>No podrás cambiarlos después.</Text>
-                      </AlertDialogBody>
-
-                      <AlertDialogFooter>
-                        <Button ref={cancelRef} onClick={onClose}>
-                          Cancelar
-                        </Button>
-                        <Button colorScheme="blue" onClick={handleSubmit} ml={3}>
-                          Confirmar
-                        </Button>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialogOverlay>
-                </AlertDialog>
               </Flex>
             </div>
           )}

@@ -52,7 +52,7 @@ function EditSection() {
   };
 
   const handleAddOption = () => {
-    setOptions([...options, { text: '', image: null, arroba: '' }]);
+    setOptions([...options, { text: '', image: null, arroba: '', imageType: 'Avatar', description: '' }]);
   };
 
   const handleDeleteSection = async () => {
@@ -113,9 +113,21 @@ function EditSection() {
             const imageRef = ref(storage, `sections/${newSectionNumber || selectedSection}/options/${index}`);
             await uploadBytes(imageRef, option.image);
             const imageUrl = await getDownloadURL(imageRef);
-            return { text: option.text, imageUrl, arroba: option.arroba };
+            return { 
+              text: option.text || '', 
+              imageUrl, 
+              arroba: option.arroba || '', 
+              imageType: option.imageType || 'Avatar', 
+              description: option.description || '' 
+            };
           } else {
-            return { text: option.text, arroba: option.arroba };
+            return { 
+              text: option.text || '', 
+              imageUrl: option.imageUrl || null, 
+              arroba: option.arroba || '', 
+              imageType: option.imageType || 'Avatar', 
+              description: option.description || '' 
+            };
           }
         }));
 
@@ -202,6 +214,21 @@ function EditSection() {
                   placeholder="Arroba"
                   value={option.arroba}
                   onChange={(e) => handleOptionChange(index, 'arroba', e.target.value)}
+                  style={{ width: 'calc(100% - 110px)', padding: '8px', borderRadius: '5px', border: '1px solid #ccc', marginTop: '10px' }}
+                />
+                <select
+                  value={option.imageType}
+                  onChange={(e) => handleOptionChange(index, 'imageType', e.target.value)}
+                  style={{ width: 'calc(100% - 110px)', padding: '8px', borderRadius: '5px', border: '1px solid #ccc', marginTop: '10px' }}
+                >
+                  <option value="Avatar">Avatar</option>
+                  <option value="Banner">Banner</option>
+                </select>
+                <input
+                  type="text"
+                  placeholder="Descripción"
+                  value={option.description}
+                  onChange={(e) => handleOptionChange(index, 'description', e.target.value)}
                   style={{ width: 'calc(100% - 110px)', padding: '8px', borderRadius: '5px', border: '1px solid #ccc', marginTop: '10px' }}
                 />
               </div>

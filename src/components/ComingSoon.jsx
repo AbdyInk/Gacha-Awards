@@ -57,6 +57,14 @@ const ComingSoon = () => {
         return () => clearInterval(interval);
     }, []);
 
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            document.getElementById('waitingMessage').style.display = 'block';
+        }, 120000); // 2 minutes
+
+        return () => clearTimeout(timer);
+    }, []);
+
     return (
         <Box
             display="flex"
@@ -68,6 +76,17 @@ const ComingSoon = () => {
             position="relative"
         >
             <Text className="animate__animated animate__fadeIn animate__slow" fontSize="4xl">MUY PRONTO</Text>
+            <Box
+                className="animate__animated animate__fadeIn animate__slow"
+                position="absolute"
+                bottom="50px"
+                textAlign="center"
+                display="none"
+                id="waitingMessage"
+            >
+                <Text fontSize="2xl">¿Esperando a que algo suceda?</Text>
+            </Box>
+            
             {/*<Box
                 className="animate__animated animate__fadeIn animate__slow"
                 position="absolute"

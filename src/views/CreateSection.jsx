@@ -7,11 +7,11 @@ import { useNavigate } from 'react-router-dom';
 function CreateSection() {
   const [sectionTitle, setSectionTitle] = useState('');
   const [sectionDescription, setSectionDescription] = useState('');
-  const [options, setOptions] = useState([{ text: '', image: null, arroba: '' }]);
+  const [options, setOptions] = useState([{ text: '', image: null, arroba: '', imageType: 'Avatar', description: '' }]);
   const navigate = useNavigate();
 
   const handleAddOption = () => {
-    setOptions([...options, { text: '', image: null, arroba: '' }]);
+    setOptions([...options, { text: '', image: null, arroba: '', imageType: 'Avatar', description: '' }]);
   };
 
   const handleOptionChange = (index, field, value) => {
@@ -28,8 +28,8 @@ function CreateSection() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!sectionTitle || !sectionDescription || options.some(option => !option.text || !option.arroba)) {
-      alert('Please fill in all fields.');
+    if (!sectionTitle || !sectionDescription) {
+      alert('Section title and description are required.');
       return;
     }
 
@@ -45,9 +45,21 @@ function CreateSection() {
             const imageRef = ref(storage, `sections/${sectionNumber}/options/${index}`);
             await uploadBytes(imageRef, option.image);
             const imageUrl = await getDownloadURL(imageRef);
-            return { text: option.text, imageUrl, arroba: option.arroba };
+            return { 
+              text: option.text || '', 
+              imageUrl, 
+              arroba: option.arroba || '', 
+              imageType: option.imageType || 'Avatar', 
+              description: option.description || '' 
+            };
           } else {
-            return { text: option.text, arroba: option.arroba };
+            return { 
+              text: option.text || '', 
+              imageUrl: null, 
+              arroba: option.arroba || '', 
+              imageType: option.imageType || 'Avatar', 
+              description: option.description || '' 
+            };
           }
         }));
 
@@ -59,7 +71,7 @@ function CreateSection() {
           }
         });
         alert('Section added successfully!');
-        navigate('/votar');
+        navigate('/voting');
       } else {
         console.error('Form not found');
       }
@@ -80,6 +92,7 @@ function CreateSection() {
             value={sectionTitle}
             onChange={(e) => setSectionTitle(e.target.value)}
             style={{ width: '100%', padding: '8px', borderRadius: '5px', border: '1px solid #ccc' }}
+            required
           />
         </div>
         <div style={{ marginBottom: '15px' }}>
@@ -89,6 +102,7 @@ function CreateSection() {
             value={sectionDescription}
             onChange={(e) => setSectionDescription(e.target.value)}
             style={{ width: '100%', padding: '8px', borderRadius: '5px', border: '1px solid #ccc' }}
+            required
           />
         </div>
         <div style={{ marginBottom: '15px' }}>
@@ -112,6 +126,21 @@ function CreateSection() {
                 placeholder="Arroba"
                 value={option.arroba}
                 onChange={(e) => handleOptionChange(index, 'arroba', e.target.value)}
+                style={{ width: 'calc(100% - 110px)', padding: '8px', borderRadius: '5px', border: '1px solid #ccc', marginTop: '10px' }}
+              />
+              <select
+                value={option.imageType}
+                onChange={(e) => handleOptionChange(index, 'imageType', e.target.value)}
+                style={{ width: 'calc(100% - 110px)', padding: '8px', borderRadius: '5px', border: '1px solid #ccc', marginTop: '10px' }}
+              >
+                <option value="Avatar">Avatar</option>
+                <option value="Banner">Banner</option>
+              </select>
+              <input
+                type="text"
+                placeholder="Descripción"
+                value={option.description}
+                onChange={(e) => handleOptionChange(index, 'description', e.target.value)}
                 style={{ width: 'calc(100% - 110px)', padding: '8px', borderRadius: '5px', border: '1px solid #ccc', marginTop: '10px' }}
               />
             </div>

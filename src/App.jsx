@@ -32,10 +32,10 @@ function App() {
     if (location.pathname === '/') {
       document.body.classList.add('home-background');
       document.body.classList.remove('voting-background', 'results-background');
-    } else if (location.pathname === '/voting') {
+    } else if (location.pathname === '/votar' || location.pathname === '/form') {
       document.body.classList.add('voting-background');
       document.body.classList.remove('home-background', 'results-background');
-    } else if (location.pathname === '/results') {
+    } else if (location.pathname === '/resultados') {
       document.body.classList.add('results-background');
       document.body.classList.remove('home-background', 'voting-background');
     } else {
@@ -47,7 +47,7 @@ function App() {
     setShowIntro(false);
   };
 
-  const isAuthorized = location.search.includes(`key=${SECRET_KEY}`);  // Replace with your actual authorization logic
+  const isAuthorized = true // location.search.includes(`key=${SECRET_KEY}`);  // Replace with your actual authorization logic
 
   return (
     <ChakraProvider>
@@ -58,10 +58,12 @@ function App() {
         {!isAuthorized ? <Route path="/" element={<ComingSoon />} /> : (
           <>
             <Route path="/" element={<Home />} />
-            <Route path="/voting" element={<Voting />} />
-            <Route path="/results" element={<VoteResults />} />
+            <Route path="/votar" element={<Voting />} />
+            <Route path="/resultados" element={<VoteResults />} />
             <Route path="/create-section" element={<CreateSection />} />
             <Route path="/edit-section" element={<EditSection />} />
+
+            <Route path="/form" element={<Form />} />
           </>
         )}
         <Route path="*" element={<NotFound />} />

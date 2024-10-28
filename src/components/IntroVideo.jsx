@@ -1,57 +1,86 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Box, Spinner } from '@chakra-ui/react';
 import "../styles/IntroVideo.css"; // Asegúrate de crear este archivo de estilos
 
-import videoX from '../assets/videos/GACHA_AWARDS.mp4';
+import vidM from '../assets/videos/GACHA_AWARDS.mp4';
+import playButtonImage from '../assets/buttons/play-button.png'; // Asegúrate de tener esta imagen
+
+import { FaPlay } from "react-icons/fa";
 
 const IntroVideo = ({ onEnd }) => {
   const videoRef = useRef(null);
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const videoElement = document.getElementById('intro-video');
-    videoElement.onended = () => {
-      localStorage.setItem('hasSeenIntro', 'true');
-      onEnd();
-    };
-  }, [onEnd]);
-
-  useEffect(() => {
-    const videoElement = document.getElementById('intro-video');
-    const unmuteTimeout = setTimeout(() => {
-      videoElement.muted = false;
-    }, 1000);
-    return () => clearTimeout(unmuteTimeout);
-  }, []);
-
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.play().catch((error) => {
-        console.error("Error al reproducir el video:", error);
-      });
-    }
-  }, []);
+  const [fadeOut, setFadeOut] = useState(false);
+  const [showPlayButton, setShowPlayButton] = useState(true);
 
   const handleCanPlay = () => {
     setLoading(false);
-    videoRef.current.play();
   };
 
+  const handlePause = (e) => {
+    const videoElement = e.target;
+    if (videoElement.currentTime < videoElement.duration - 1) {
+      videoElement.play();
+    }
+  };
+
+  const handlePlayButtonClick = () => {
+    setShowPlayButton(false);
+    videoRef.current.play().catch((error) => {
+      console.error("Error al reproducir el video:", error);
+    });
+  };
+
+  const preventManipulation = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  useEffect(() => {
+    const videoElement = videoRef.current;
+    videoElement.addEventListener('pause', handlePause);
+    videoElement.addEventListener('volumechange', preventManipulation);
+    videoElement.addEventListener('ended', preventManipulation);
+    videoElement.addEventListener('loop', preventManipulation);
+
+    return () => {
+      videoElement.removeEventListener('pause', handlePause);
+      videoElement.removeEventListener('volumechange', preventManipulation);
+      videoElement.removeEventListener('ended', preventManipulation);
+      videoElement.removeEventListener('loop', preventManipulation);
+    };
+  }, []);
+
   return (
-    <Box className="IntroVideo-Container">
+    <Box className={`IntroVideo-Container ${fadeOut ? 'fade-out' : ''}`}>
       {loading && (
         <Box className="LoadingScreen">
           <Spinner size="xl" />
+        </Box>
+      )}
+      {showPlayButton && (
+        <Box className="PlayButtonContainer" onClick={handlePlayButtonClick}>
+          <img src={playButtonImage} alt="Play Button" className="PlayButton" />
+          <Box className="PlayButtonIcon">
+            <FaPlay /> {/* Icono de play importado de react-icons */}
+          </Box>
         </Box>
       )}
       <video
         ref={videoRef}
         id="intro-video"
         className="IntroVideo"
-        muted
         onCanPlay={handleCanPlay}
+        onEnded={() => {
+          localStorage.setItem('hasSeenIntro', 'true');
+          setFadeOut(true);
+          setTimeout(() => {
+            onEnd();
+          }, 1000); // Duration of the fade-out effect
+        }}
+        controls={false} // Disable default controls
       >
-        <source src={videoX} type="video/mp4" />
+        <source src={vidM} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
     </Box>

@@ -8,8 +8,12 @@ import { FaHome, FaBars, FaEdit } from 'react-icons/fa';
 import { MdHowToVote, MdLibraryAddCheck, MdOutlineLogout, MdOutlineLogin, MdBarChart  } from "react-icons/md";
 import { HiDocumentAdd } from "react-icons/hi";
 
+import "../styles/Header.css";
+
 const allowedEmails = ['abdyxx@gmail.com', 'jdglezsosa@gmail.com', 'twodiobdoeh@gmail.com'];
 import logo from '../assets/logoGA.png';
+
+import Cortina from '../assets/bg/LaCortinaJoder.png';
 
 function Header() {
   const [user, setUser] = useState(null);
@@ -54,10 +58,24 @@ function Header() {
   const isAllowedUser = user && allowedEmails.includes(user.email);
 
   return (
-    <Box bg="orange.400" p={2} style={{borderBottom: "1vh solid #C95F0E"}}>
+  <><Box
+        position="absolute"
+        top={0}
+        left={0}
+        width="100%"
+        height="100%"
+        bgImage={`url(${Cortina})`}
+        bgSize={{xl:"100% 100%", md:"100% 100%"}}
+        bgPosition="center"
+        bgRepeat={"no-repeat"}
+        zIndex={21}
+        pointerEvents="none"
+      />
+    <Box zIndex={22} bg="orange.400" p={2} style={{borderBottom: "1vh solid #C95F0E"}}>
+      
       <Flex alignItems="center" justifyContent="space-between">
-        <Flex boxSize="60px" width={"180px"}>
-          <img src={logo} alt="Logo" style={{ position: "relative", marginLeft: "6vh", height: '120%', width: '20vh' }} />
+        <Flex cursor={"pointer"} boxSize="60px" width={"180px"} as={Link} to="/">
+          <img src={logo} alt="Logo" style={{ position: "relative", marginLeft: "6vh", height: '120%', width: '90%' }} />
         </Flex>
         <Spacer />
         <Box display={{ base: 'none', lg: 'flex' }} flex="1" justifyContent="center">
@@ -140,7 +158,7 @@ function Header() {
               <MenuItem onClick={user ? handleLogout : handleLogin}>
                 {user ? (
                   <>
-             marginLeft: "10vh",        <MdOutlineLogout />
+             <MdOutlineLogout />
                     Logout
                   </>
                 ) : (
@@ -167,6 +185,7 @@ function Header() {
         )}
       </Flex>
     </Box>
+    </>
   );
 }
 

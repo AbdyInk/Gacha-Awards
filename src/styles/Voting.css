@@ -5,15 +5,7 @@
     font-family: Arial, sans-serif;
   }
 
-.SubContainer{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: Arial, sans-serif;
-    width:76vh;
-    height: 85vh;
-    overflow-y: auto;
-}
+
 
 .SubContainer::-webkit-scrollbar {
     width: 1vh;
