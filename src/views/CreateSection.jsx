@@ -7,11 +7,11 @@ import { useNavigate } from 'react-router-dom';
 function CreateSection() {
   const [sectionTitle, setSectionTitle] = useState('');
   const [sectionDescription, setSectionDescription] = useState('');
-  const [options, setOptions] = useState([{ text: '', image: null, arroba: '', imageType: 'Avatar', description: '' }]);
+  const [options, setOptions] = useState([{ text: '', image: null, arroba: '', imageType: 'Avatar', description: '', urlEmbed: '' }]);
   const navigate = useNavigate();
 
   const handleAddOption = () => {
-    setOptions([...options, { text: '', image: null, arroba: '', imageType: 'Avatar', description: '' }]);
+    setOptions([...options, { text: '', image: null, arroba: '', imageType: 'Avatar', description: '', urlEmbed: '' }]);
   };
 
   const handleOptionChange = (index, field, value) => {
@@ -50,7 +50,8 @@ function CreateSection() {
               imageUrl, 
               arroba: option.arroba || '', 
               imageType: option.imageType || 'Avatar', 
-              description: option.description || '' 
+              description: option.description || '',
+              urlEmbed: option.urlEmbed || ''
             };
           } else {
             return { 
@@ -58,7 +59,8 @@ function CreateSection() {
               imageUrl: null, 
               arroba: option.arroba || '', 
               imageType: option.imageType || 'Avatar', 
-              description: option.description || '' 
+              description: option.description || '',
+              urlEmbed: option.urlEmbed || ''
             };
           }
         }));
@@ -135,7 +137,17 @@ function CreateSection() {
               >
                 <option value="Avatar">Avatar</option>
                 <option value="Banner">Banner</option>
+                <option value="Embed">Embed</option>
               </select>
+              {option.imageType === 'Embed' && (
+                <input
+                  type="text"
+                  placeholder="URL Embed"
+                  value={option.urlEmbed}
+                  onChange={(e) => handleOptionChange(index, 'urlEmbed', e.target.value)}
+                  style={{ width: 'calc(100% - 110px)', padding: '8px', borderRadius: '5px', border: '1px solid #ccc', marginTop: '10px' }}
+                />
+              )}
               <input
                 type="text"
                 placeholder="Descripción"

@@ -10,7 +10,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 85%;
+    height: 90%;
     background-color: black;
     z-index: 20;
     transition: opacity 1s ease-in-out;
@@ -29,6 +29,8 @@
     align-items: center;
     justify-content: center;
     color: white;
+    z-index: 9999;
+    background-color: black;
   }
 
   .PlayButtonContainer {
@@ -36,8 +38,12 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 50vh;
+    height: 18vh;
     cursor: pointer;
-    z-index: 9999;
+    z-index: 22;
+    background: url('../assets/buttons/play-button.png') no-repeat;
+    background-size: 100% 100%;
   }
 
   .PlayButton {
@@ -58,9 +64,19 @@
   .PlayButtonIcon {
     position: absolute;
     top: 50%;
-    left: 16%;
+    left: 14.5%;
     transform: translate(-50%, -50%);
     color: white;
-    font-size: 1rem; /* Adjust size as needed */
+    font-size: 2rem; /* Adjust size as needed */
     pointer-events: none; /* Ensure the icon does not interfere with clicking the button */
+  }
+
+  @media (max-width: 768px) {
+    .PlayButtonContainer {
+      width: 30vh;
+      height: 12vh;
+    }
+    .PlayButtonIcon{
+      font-size: 1rem;
+    }
   }

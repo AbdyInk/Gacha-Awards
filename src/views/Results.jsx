@@ -5,6 +5,8 @@ import { collection, getDoc, doc, getDocs } from 'firebase/firestore';
 import { useToast, Box, Flex, Heading, Text, Avatar, Progress } from '@chakra-ui/react';
 import LoadingToast from '../components/LoadingToast';
 
+import { motion } from 'framer-motion';
+
 import "../styles/Results.css";
 
 function Results() {
@@ -83,7 +85,11 @@ function Results() {
   };
   
   return (
-    <>
+    <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 1 }}
+    >
       <LoadingToast isLoading={isLoading} />
       {isLoading ? null : (
         <div className="Results-Container">
@@ -155,7 +161,7 @@ function Results() {
           </Flex>
         </div>
       )}
-    </>
+    </motion.div>
   );
 }
 

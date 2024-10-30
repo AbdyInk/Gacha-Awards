@@ -59,17 +59,7 @@ function Header() {
 
   return (
   <><Box
-        position="absolute"
-        top={0}
-        left={0}
-        width="100%"
-        height="100%"
-        bgImage={`url(${Cortina})`}
-        bgSize={{xl:"100% 100%", md:"100% 100%"}}
-        bgPosition="center"
-        bgRepeat={"no-repeat"}
-        zIndex={21}
-        pointerEvents="none"
+        className="cortinaJo"
       />
     <Box zIndex={22} bg="orange.400" p={2} style={{borderBottom: "1vh solid #C95F0E"}}>
       

@@ -28,27 +28,45 @@ body, html, #root {
   background-color: black;
   background-repeat: no-repeat;
   background-image: url('./assets/bg/bgHome.png');
-  background-size: 100% 85%;
+  background-size: 100% 90%;
   background-position: bottom;
   background-attachment: fixed;
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+}
+
+.home-background.fadeOut {
+  opacity: 0;
 }
 
 .voting-background {
   background-color: black;
   background-repeat: no-repeat;
   background-image: url('./assets/bg/bgVoting.png');
-  background-size: 100% 85%;
+  background-size: 100% 90%;
   background-position: bottom;
   background-attachment: fixed;
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+}
+
+.voting-background.fadeOut {
+  opacity: 0;
 }
 
 .results-background {
   background-color: black;
   background-repeat: no-repeat;
   background-image: url('./assets/bg/bgResults.png');
-  background-size: 100% 85%;
+  background-size: 100% 90%;
   background-position: bottom;
   background-attachment: fixed;
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+}
+
+.results-background.fadeOut {
+  opacity: 0;
 }
 
 .transition-screen {
@@ -70,18 +88,18 @@ body, html, #root {
 
 @media (max-height: 384px) {
   .home-background {
-    background-size: 300% 85%;
+    background-size: 300% 90%;
   }
 }
 
 @media (max-width: 768px){
   .home-background{
-    background-size: 200% 85%;
+    background-size: 200% 90%;
   }
 }
 
 @media (max-width: 478px) {
   .home-background{
-    background-size: 300% 85%;
+    background-size: 300% 90%;
   }
 }

@@ -6,14 +6,22 @@
   font-family: Arial, sans-serif;
 }
 
+.developA{
+  display: flex;
+  flex-direction: column;
+  transform: scale(0.7);
+}
+
 .SubContainer{
   display: flex;
+  justify-self: flex-end;
   flex-direction: column;
   align-items: center;
   font-family: Arial, sans-serif;
-  max-width:42%;
-  height: 85vh;
+  min-width:31%;
+  height: 80vh;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .backgroundHome {
@@ -26,13 +34,17 @@
 }
 
 .TelevisorAnuncio1, .TelevisorAnuncio2{
+  display: flex;
+
   cursor: pointer;
   position: absolute;
-  top: 5;
+  top: 3;
   height: 40%;
   width: 24%;
   background-size: 100% 100%;
   background-position: center;
+  align-items: flex-end;
+  justify-content: center;
 }
 .TelevisorAnuncio1{
   left: 4%;
@@ -124,8 +136,13 @@
   width: 30vh;
   height: 8vh;
   cursor: pointer;
+  position: sticky;
+  transition: transform 0.3s ease-in-out;
 }
 
+.Bolp:hover {
+  transform: scale(1.1); /* Aumentar el tamaño del elemento en hover */
+}
 
 .litBolp {
   align-items: center;
@@ -163,41 +180,64 @@
   border-left: 2px solid #24242480;
 }
 
-@media (max-width: 1080px) {
-  .home-container {
-    align-items: flex-start;
-  }
+@media (max-width: 1230px) {
   .SubContainer{
-    max-width: 60%;
+    min-width: 40%;
   }
   .TelevisorAnuncio1{
-    display: none;
+    left: 1%;
+    top: 10%;
+    width: 22%;
+    height: 30%;
   }
   .TelevisorAnuncio2{
+    right: 1%;
     top: 10%;
-    width: 40%;
-    height: 50%;
+    width: 22%;
+    height: 30%;
   }
 
 }
 
 @media (max-width: 982px) {
+  .home-container {
+    align-items: flex-start;
+  }
+  .SubContainer{
+    min-width: 66%;
+  }
+  .TelevisorAnuncio1{
+    display: none;
+  }
   .TelevisorAnuncio2{
-    top: 8%;
-    width: 32%;
-    height: 40%;
+    width: 28%;
+    height: 32%;
+  }
+  .developA{
+    display: none;
   }
 }
 
 @media (max-height: 384px) {
+  .home-container {
+    align-items: center;
+  }
   .SubContainer{
-    min-width: 40%;
+    min-width: 44%;
+    max-height: 68%;
+  }
+  .TelevisorAnuncio1{
+    display: flex;
+    left:2%;
+    top: 18%;
+    width: 24%;
+    height: 46%;
   }
   .TelevisorAnuncio2{
-    right:10%;
+    right:2%;
     top: 18%;
-    width: 38%;
-    height: 72%;}
+    width: 24%;
+    height: 46%;}
 }
 
 /* Media query for mobile devices */
@@ -216,12 +256,13 @@
   }
 
   .SubContainer{
-    max-width: 90%;
+    min-width: 99%;
   }
 
   .Bolp {
-    transform: scale(0.8);
+    transform: scale(0.9);
   }
+  
   .ytAvatar {
     transform: scale(0.75);
   }
@@ -265,7 +306,7 @@
 
   .SubContainer{
     max-height: 90%;
-    max-width: 99%;
+    min-width: 99%;
   }
 }
 
@@ -274,12 +315,15 @@
     align-items: flex-start;
   }
   .SubContainer{
-    min-width: 50%;
+    min-width: 60%;
+  }
+  .TelevisorAnuncio1{
+    display: none;
   }
   .TelevisorAnuncio2{
     display: flex;
-    right:10%;
+    right:1%;
     top: 18%;
-    width: 38%;
-    height: 72%;}
+    width: 24%;
+    height: 44%;}
 }

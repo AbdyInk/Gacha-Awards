@@ -60,9 +60,8 @@ const IntroVideo = ({ onEnd }) => {
       )}
       {showPlayButton && (
         <Box className="PlayButtonContainer" onClick={handlePlayButtonClick}>
-          <img src={playButtonImage} alt="Play Button" className="PlayButton" />
           <Box className="PlayButtonIcon">
-            <FaPlay /> {/* Icono de play importado de react-icons */}
+            <FaPlay />
           </Box>
         </Box>
       )}

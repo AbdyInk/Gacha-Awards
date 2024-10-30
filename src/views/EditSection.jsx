@@ -52,7 +52,7 @@ function EditSection() {
   };
 
   const handleAddOption = () => {
-    setOptions([...options, { text: '', image: null, arroba: '', imageType: 'Avatar', description: '' }]);
+    setOptions([...options, { text: '', image: null, arroba: '', imageType: 'Avatar', description: '', urlEmbed: '' }]);
   };
 
   const handleDeleteSection = async () => {
@@ -118,7 +118,8 @@ function EditSection() {
               imageUrl, 
               arroba: option.arroba || '', 
               imageType: option.imageType || 'Avatar', 
-              description: option.description || '' 
+              description: option.description || '',
+              urlEmbed: option.urlEmbed || ''
             };
           } else {
             return { 
@@ -126,7 +127,8 @@ function EditSection() {
               imageUrl: option.imageUrl || null, 
               arroba: option.arroba || '', 
               imageType: option.imageType || 'Avatar', 
-              description: option.description || '' 
+              description: option.description || '',
+              urlEmbed: option.urlEmbed || ''
             };
           }
         }));
@@ -223,7 +225,17 @@ function EditSection() {
                 >
                   <option value="Avatar">Avatar</option>
                   <option value="Banner">Banner</option>
+                  <option value="Embed">Embed</option>
                 </select>
+                {option.imageType === 'Embed' && (
+                  <input
+                    type="text"
+                    placeholder="URL Embed"
+                    value={option.urlEmbed}
+                    onChange={(e) => handleOptionChange(index, 'urlEmbed', e.target.value)}
+                    style={{ width: 'calc(100% - 110px)', padding: '8px', borderRadius: '5px', border: '1px solid #ccc', marginTop: '10px' }}
+                  />
+                )}
                 <input
                   type="text"
                   placeholder="Descripción"

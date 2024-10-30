@@ -5,6 +5,16 @@ import { collection, getDoc, doc, addDoc, query, where, getDocs } from 'firebase
 import { useToast, Box, Flex, Heading, Stack, Button, Text, Image, useDisclosure, AlertDialog, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, AlertDialogContent, AlertDialogOverlay, Spacer, Center, Avatar } from '@chakra-ui/react';
 import LoadingToast from '../components/LoadingToast';
 
+import { motion } from 'framer-motion';
+
+import AdSenseAd from '../components/AdSenseAd';
+
+import Tele1 from '../assets/elements/votingTele1.png';
+import Tele2 from '../assets/elements/votingTele2.png';
+
+import startButton from '../assets/buttons/start.png';
+import { HiBookOpen } from "react-icons/hi";
+
 import "../styles/Voting.css";
 
 function Voting() {
@@ -59,17 +69,51 @@ function Voting() {
     }));
   };
 
+  const adClient="ca-pub-1012030723398759";
+  const adSlot1="4440483125";
+  const adSlot2="5380463034";
+
   return (
-    <>
-      <LoadingToast isLoading={isLoading} />
+    <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        >
       {isLoading ? null : (
         <>
+           <Box className="TelevisorAnuncio3" cursor={"pointer"} backgroundImage={`url(${Tele1})`} draggable="false" onContextMenu={(e) => e.preventDefault()} >
+                <Flex ml={0.5} mb={2.5} height="71.3%" width="91.6%">
+                  <AdSenseAd adClient={adClient} adSlot={adSlot1} />
+                </Flex>
+            </Box>
+            <Box className="TelevisorAnuncio4" cursor={"pointer"} backgroundImage={`url(${Tele2})`} draggable="false" onContextMenu={(e) => e.preventDefault()} >
+                <Flex mr={0.5} mb={2.5} height="71.3%" width="91.6%">
+                  <AdSenseAd adClient={adClient} adSlot={adSlot2} />
+                </Flex>
+            </Box>
           {!hasVoted ? (
             <Center height="80vh">
-              <Box bg={"yellow.400"} textAlign="center" p={10} borderWidth="1px" borderRadius="lg" boxShadow="lg">
+              <Box bg={"#F6E05E"} textAlign="center" p={10} border="4px solid black" borderRadius="lg" boxShadow="lg">
                 <Heading as="h2" size="xl" mb={4}>¡Bienvenido a las votaciones!</Heading>
-                <Text fontSize="lg" mb={4}>Haz clic en el botón de abajo para comenzar el formulario.</Text>
-                <Button colorScheme="blue" onClick={() => navigate('/form')}>Comenzar el formulario</Button>
+                <Text fontSize="lg" mb={4}>Haz clic en el botón de abajo para comenzar a votar!</Text>
+                <Button
+                  bgColor={"transparent"}
+                  onClick={() => navigate('/form')}
+                  backgroundImage={`url(${startButton})`}
+                  backgroundSize="100% 100%"
+                  backgroundPosition="center"
+                  height="70px"
+                  width="190px"
+                  border="none"
+                  colorScheme="transparent"
+                  transition={"transform ease-in-out 0.3s"}
+                  _hover={{transform: "scale(1.1)"}}
+                  textAlign={"flex-start"}
+                  justifyContent={"flex-start"}
+                  pl={3.5}
+                >
+                  <HiBookOpen color="#FFAA00" size={25} />
+                </Button>
               </Box>
             </Center>
           ) : (
@@ -100,13 +144,14 @@ function Voting() {
                               <Box key={idx} position="relative">
                                 <label>
                                   <input
+                                    className="votingRadio"
                                     type="radio"
                                     name={`section-${index}`}
                                     value={option.text}
                                     checked={votes[sectionKey] === option.text}
                                     readOnly
                                   />
-                                  <Text as="span" ml={2} color={votes[sectionKey] === option.text ? "#FF6A00" : "inherit"}>
+                                  <Text as="span" fontSize={"sm"} ml={2} color={votes[sectionKey] === option.text ? "#FF6A00" : "inherit"}>
                                     ➤ {option.text}
                                   </Text>
                                 </label>
@@ -158,7 +203,7 @@ function Voting() {
           )}
         </>
       )}
-    </>
+    </motion.div>
   );
 }
 

@@ -1,11 +1,11 @@
 .Form-Container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     font-family: Arial, sans-serif;
     width: 76vh;
     height: auto;
+    max-height: 86%;
     overflow-y: auto;
     text-align: center;
     padding: 10px;
@@ -75,7 +75,7 @@
     position: relative;
 }
 
-input[type="radio"] {
+.formRadio {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -91,7 +91,7 @@ input[type="radio"] {
     border-color: rgba(0, 0, 0, 0.648);
 }
 
-input[type="radio"]:checked {
+.formRadio:checked {
     border-top: 0;
     border-right: 0;
     border-color: rgba(0, 0, 0, 0.619);
@@ -99,7 +99,7 @@ input[type="radio"]:checked {
     border-radius: 50%;
 }
 
-input[type="radio"]:checked::before {
+.formRadio:checked::before {
     font-family: Arial, sans-serif;
     content: '';
     display: flex;
@@ -120,6 +120,7 @@ input[type="radio"]:checked::before {
 }
 
 .Form-Description {
+    font-size: larger;
     margin: 10px 0;
 }
 
@@ -128,7 +129,7 @@ input[type="radio"]:checked::before {
     position: relative;
 }
 
-.Form-Option input[type="radio"] {
+.Form-Option .formRadio {
     margin-right: 10px;
 }
 
@@ -139,3 +140,121 @@ input[type="radio"]:checked::before {
 .Form-Button {
     margin-top: 20px;
 }
+
+.TelevisorAnuncio3, .TelevisorAnuncio4{
+    display: flex;
+  
+    cursor: pointer;
+    position: absolute;
+    top: 5%;
+    height: 66%;
+    width: 17%;
+    background-size: 100% 100%;
+    background-position: center;
+    align-items: flex-end;
+    justify-content: center;
+    border-radius: 10px;
+  }
+  .TelevisorAnuncio3{
+    left: 5%;
+  }
+  .TelevisorAnuncio4{
+    right: 5%;
+  }
+
+  .TextOptionContainer{
+    flex-direction: column;
+    width: 56%;
+    align-items: flex-start;
+  }
+  .ImageOptionContainer{
+    width: 40%;
+  }
+
+  .textForm{
+    font-size: medium;
+  }
+
+  @media (max-width: 1150px){
+    .Form-Container{
+      width: 50%;
+    }
+
+    .TelevisorAnuncio3{
+        width: 20%;
+        left: 1%;
+    }
+    .TelevisorAnuncio4{
+        width: 20%;
+        right: 1%;
+    }
+  }
+
+  @media (max-width: 912px){
+    .TelevisorAnuncio3, .TelevisorAnuncio4{
+      display: none;
+    }
+    .Form-Container{
+        width: 90%;
+      }
+  }
+
+  @media (max-width: 768px) {
+        .Form-Container{
+            width: 90%;
+        }
+    }
+
+    @media (max-width: 478px) {
+        .Form-Container{
+            width: 98%;
+        }
+        .formRadio {
+            width: 18px;
+            height: 18px;
+        }
+
+        .TextOptionContainer{
+            width: 100%;
+        }
+        .ImageOptionContainer{
+            width: 100%;
+        }
+
+        .sectionContainer{
+            flex-direction: column;
+        }
+        .textForm{
+            font-size: small;
+        }
+    }
+    @media (max-height: 476px) {
+        .Voting-Container{
+            max-height: 77%;
+        }
+        .TelevisorAnuncio3, .TelevisorAnuncio4{
+            display: none;
+          }
+        .Form-Container{
+            width: 98%;
+            min-height: 94%;
+        }
+        .formRadio {
+            width: 18px;
+            height: 18px;
+        }
+
+        .TextOptionContainer{
+            width: 100%;
+        }
+        .ImageOptionContainer{
+            width: 100%;
+        }
+
+        .sectionContainer{
+            flex-direction: row;
+        }
+        .textForm{
+            font-size: small;
+        }
+    }
