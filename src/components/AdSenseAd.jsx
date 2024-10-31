@@ -1,14 +1,24 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 const AdSenseAd = ({ adClient, adSlot }) => {
+  const adRef = useRef(null);
+
   useEffect(() => {
-    // Ejecutar adsbygoogle.push para inicializar el anuncio
-    (window.adsbygoogle = window.adsbygoogle || []).push({});
+    const initializeAds = () => {
+      if (adRef.current && adRef.current.offsetWidth > 0) {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } else {
+        setTimeout(initializeAds, 100);
+      }
+    };
+
+    initializeAds();
   }, []);
 
   return (
-    <ins className="adsbygoogle"
-         style={{ display: 'block' }}
+    <ins ref={adRef}
+         className="adsbygoogle"
+         style={{ display: 'block', width: '100%', height: 'auto' }}
          data-ad-client={adClient}
          data-ad-slot={adSlot}
          data-ad-format="auto"
