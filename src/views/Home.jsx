@@ -18,6 +18,8 @@ import driaxuIcon from '../assets/icons/driaxuIcon.webp';
 import driaxuIcon2 from '../assets/icons/driaxuIcon.png';
 import sperIcon from '../assets/icons/sperIcon.png';
 import gatielaIcon from '../assets/icons/gatielaIcon.png';
+import lisaIcon from '../assets/icons/lisaIcon.png';
+import melodiIcon from '../assets/icons/melodiIcon.png';
 
 import Tele1 from '../assets/elements/homeTele1.png';
 import Tele2 from '../assets/elements/homeTele2.png';
@@ -83,6 +85,18 @@ function Home() {
             </Box>
 
             <Heading as="h1" size="lg" mb={1} color="gray.200" style={{ fontFamily: 'Eracake' }}>PARTICIPANTES</Heading>
+
+            <Flex justifyContent="center" alignItems="center" gap={4} direction={{ base: 'column', sm: 'row' }} mb={2}>
+              <Flex className="Bolp" onClick={() => window.open("https://www.youtube.com/@lisasstudio2007", "_blank")}>
+                <img src={lisaIcon} draggable="false" onContextMenu={(e) => e.preventDefault()} />
+              </Flex>
+              <Flex className="Bolp" onClick={() => window.open("https://www.youtube.com/@MelodiFriki", "_blank")}>
+                <img src={melodiIcon} draggable="false" onContextMenu={(e) => e.preventDefault()} />
+              </Flex>
+            </Flex>
+
+            <div style={{width: "22vh", background: "white", border: "1px solid white", margin: "2vh 0" }}></div>
+
             <Flex justifyContent="center" alignItems="center" gap={4} direction={{ base: 'column', sm: 'row' }} mb={6}>
 
               <Flex className="Bolp" onClick={() => window.open("https://www.youtube.com/@KaLeBthehawk", "_blank")}>
