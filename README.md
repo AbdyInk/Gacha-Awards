@@ -7,7 +7,3 @@ Sitio web para votar en los gacha awards anuales. ¡Mantente al pendiente, vota 
 - Votación en tiempo real
 - Resultados actualizados
 - Interfaz amigable
-
-## Licencia
-
-Este proyecto está bajo la Licencia MIT.

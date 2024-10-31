@@ -26,3 +26,4 @@ src/Firebase/firebaseConfig.js
 build
 dist
 public/ads.txt
+build/index.html
