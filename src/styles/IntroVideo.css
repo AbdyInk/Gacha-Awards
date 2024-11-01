@@ -41,7 +41,7 @@
     width: 50vh;
     height: 18vh;
     cursor: pointer;
-    z-index: 22;
+    z-index: 30;
     background: url('../assets/buttons/play-button.png') no-repeat;
     background-size: 100% 100%;
   }
@@ -69,6 +69,30 @@
     color: white;
     font-size: 2rem; /* Adjust size as needed */
     pointer-events: none; /* Ensure the icon does not interfere with clicking the button */
+  }
+
+  .BlackBackground {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index: 26;
+  }
+  
+  .BlackBackground.fade-out {
+    animation: fadeOut 3s forwards;
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
   }
 
   @media (max-width: 768px) {

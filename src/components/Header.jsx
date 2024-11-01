@@ -13,7 +13,7 @@ import "../styles/Header.css";
 const allowedEmails = ['abdyxx@gmail.com', 'jdglezsosa@gmail.com', 'twodiobdoeh@gmail.com'];
 import logo from '../assets/logoGA.png';
 
-import Cortina from '../assets/bg/LaCortinaJoder.png';
+import Cortina from '../assets/bg/Cortina.png';
 
 function Header() {
   const [user, setUser] = useState(null);

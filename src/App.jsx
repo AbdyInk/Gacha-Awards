@@ -119,28 +119,6 @@ function App() {
             {isFirstVisit && showIntro && <IntroVideo onEnd={handleIntroEnd} />}
             </>
         )}
-        <Box
-           className="developA"
-           position={"absolute"} 
-           direction={"column"}
-           left={0}
-           bottom={0}
-           height={"10vh"}
-           transition={"transform 0.3s ease-in-out"}
-           _hover={{ transform: "scale(0.75)" }}
-           onClick={() => window.open("https://www.youtube.com/@AbdyInk", "_blank")}
-           cursor={"pointer"}
-           >
-            <Flex width={"28vh"} height={"6vh"} direction={"row"} alignItems={"center"} textAlign={"center"} borderRadius={"100vh"} bgGradient="linear(to-r, yellow.200, purple.500)" border="4px solid" borderTop={"none"} borderLeft={"none"} borderColor="purple.800" _hover={{transform: "scale(1.0)"}} className="Bolp">
-          
-            <Avatar ml={2} borderColor={"blue.100"} className="ytAvatar" name="ChepeTuber" src="https://yt3.ggpht.com/m1dOBLr0ELFxnPBDjIBGWEfXgXvLqgMWHKroBO-z0yZhP-19SRPkwvmF0YgciIpc7KcL1p2vCQ=s108-c-k-c0x00ffffff-no-rj" height={9} width={9} />
-            <Text fontSize={"20px"} fontWeight={"bold"} height={"26%"} alignItems={"center"} textAlign={"center"} color={"purple.800"}>@AbdyInk</Text>
-
-            </Flex>
-            <Flex ml={"22%"} mt={"-1"} className="litBolp" bgGradient="linear(to-r, blue.200, purple.600)">
-            <Text fontWeight={"bold"} height={"10%"} alignItems={"center"} textAlign={"center"} color={"blue.800"}>Developer</Text>
-            </Flex>
-          </Box>
     </>
   );
 }

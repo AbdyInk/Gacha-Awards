@@ -11,7 +11,9 @@ const IntroVideo = ({ onEnd }) => {
   const videoRef = useRef(null);
   const [loading, setLoading] = useState(true);
   const [fadeOut, setFadeOut] = useState(false);
+  const [bgFadeOut, setBgFadeOut] = useState(false);
   const [showPlayButton, setShowPlayButton] = useState(true);
+  const [showBlackBackground, setShowBlackBackground] = useState(true);
 
   const handleCanPlay = () => {
     setLoading(false);
@@ -29,6 +31,7 @@ const IntroVideo = ({ onEnd }) => {
     videoRef.current.play().catch((error) => {
       console.error("Error al reproducir el video:", error);
     });
+    setBgFadeOut(true);
   };
 
   const preventManipulation = (e) => {
@@ -52,17 +55,22 @@ const IntroVideo = ({ onEnd }) => {
   }, []);
 
   return (
-    <Box className={`IntroVideo-Container ${fadeOut ? 'fade-out' : ''}`}>
-      {loading && (
-        <Box className="LoadingScreen">
-          <Spinner size="xl" />
-        </Box>
-      )}
-      {showPlayButton && (
+    <>
+    {showBlackBackground && (
+      <Box className={`BlackBackground ${bgFadeOut ? 'fade-out' : ''}`} >
+        {showPlayButton && (
         <Box className="PlayButtonContainer" onClick={handlePlayButtonClick}>
           <Box className="PlayButtonIcon">
             <FaPlay />
           </Box>
+        </Box>
+      )}
+      </Box>
+    )}
+    <Box className={`IntroVideo-Container ${fadeOut ? 'fade-out' : ''}`}>
+      {loading && (
+        <Box className="LoadingScreen">
+          <Spinner size="xl" />
         </Box>
       )}
       <video
@@ -83,6 +91,7 @@ const IntroVideo = ({ onEnd }) => {
         Your browser does not support the video tag.
       </video>
     </Box>
+    </>
   );
 };
 

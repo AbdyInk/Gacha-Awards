@@ -26,7 +26,6 @@ import Tele2 from '../assets/elements/homeTele2.png';
 
 function Home() {
   const adClient = "ca-pub-1012030723398759";
-  const adSlot = "4440483125";
   const adSlot1 = "3988797224";
   const adSlot2 = "3163894620";
 
@@ -126,6 +125,28 @@ function Home() {
               </Flex>
 
             </Flex>
+
+              <div style={{width: "22vh", background: "white", border: "1px solid white", margin: "2vh 0" }}></div>
+
+            <Box
+              className="developA" 
+              direction={"column"}
+              height={"10vh"}
+              transition={"transform 0.3s ease-in-out"}
+              _hover={{ transform: "scale(1.0)" }}
+              onClick={() => window.open("https://www.youtube.com/@AbdyInk", "_blank")}
+              cursor={"pointer"}
+              >
+              <Flex width={"28vh"} height={"6vh"} direction={"row"} alignItems={"center"} textAlign={"center"} borderRadius={"100vh"} bgGradient="linear(to-r, yellow.200, purple.500)" border="5px solid" borderTop={"none"} borderLeft={"none"} borderColor="purple.800" _hover={{transform: "scale(1.0)"}} className="Bolp">
+          
+              <Avatar borderLeft={"2px solid #8EC6F1"} borderRight={"2px solid #8EC6F1"} ml={"2.5%"} borderColor={"blue.100"} mr={"5%"} name="AbdyInk" src="https://yt3.ggpht.com/m1dOBLr0ELFxnPBDjIBGWEfXgXvLqgMWHKroBO-z0yZhP-19SRPkwvmF0YgciIpc7KcL1p2vCQ=s108-c-k-c0x00ffffff-no-rj" height={"96%"} width={"20%"} />
+              <Text fontSize={"140%"} fontWeight={"bold"} height={"28%"} alignItems={"center"} textAlign={"center"} color={"purple.800"}>@AbdyInk</Text>
+
+              </Flex>
+              <Flex ml={"22%"} mt={"-3%"} className="litBolp" bgGradient="linear(to-r, blue.200, purple.600)">
+              <Text fontWeight={"bold"} height={"8%"} alignItems={"center"} textAlign={"center"} color={"blue.800"}>Desarrollador</Text>
+              </Flex>
+            </Box>
           </Flex>
         </>
       </div>

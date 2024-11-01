@@ -1,28 +1,41 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Adsense } from '@ctrl/react-adsense';
 
 const AdSenseAd = ({ adClient, adSlot }) => {
   const adRef = useRef(null);
+  const [adBlocked, setAdBlocked] = useState(false);
 
   useEffect(() => {
-    const initializeAds = () => {
-      if (adRef.current && adRef.current.offsetWidth > 0) {
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
+    const checkAdBlocker = () => {
+      if (adRef.current && adRef.current.offsetHeight === 0) {
+        setAdBlocked(true);
       } else {
-        setTimeout(initializeAds, 100);
+        setAdBlocked(false);
       }
     };
 
-    initializeAds();
+    // Verificar inicialmente y luego cada segundo
+    checkAdBlocker();
+    const interval = setInterval(checkAdBlocker, 1000);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
-    <ins ref={adRef}
-         className="adsbygoogle"
-         style={{ display: 'block', width: '100%', height: 'auto' }}
-         data-ad-client={adClient}
-         data-ad-slot={adSlot}
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
+    <>
+      {adBlocked ? (
+        <div style={{ color: 'red', textAlign: 'center' }}>ADBLOCK</div>
+      ) : (
+        <Adsense
+          ref={adRef}
+          className="parfo"
+          client={adClient}
+          slot={adSlot}
+          style={{ display: 'block' }}
+          adTest="on"
+        />
+      )}
+    </>
   );
 };
 

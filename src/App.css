@@ -5,17 +5,21 @@ body, html, #root {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  position: relative; /* Añadir esta línea */
+  position: relative; 
   z-index: 10;
 }
 
-
+.parfo{
+  height: 100%;
+  width: 100%;
+  border: 2px solid blue;
+}
 
 #root {
   display: flex;
   flex-direction: column;
-  position: relative; /* Asegúrate de que el contenido esté en frente del pseudo-elemento */
-  z-index: 2; /* Asegúrate de que el contenido esté en frente del pseudo-elemento */
+  position: relative; 
+  z-index: 2;
 }
 
 .App {
