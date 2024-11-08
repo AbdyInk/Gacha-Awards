@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Adsense } from '@ctrl/react-adsense';
 
+
 const AdSenseAd = ({ adClient, adSlot }) => {
   const adRef = useRef(null);
-  const [adBlocked, setAdBlocked] = useState(false);
+  const [adBlocked, setAdBlocked] = useState(true);
 
   useEffect(() => {
     const checkAdBlocker = () => {
-      if (adRef.current && adRef.current.offsetHeight === 0) {
+      if (adRef.current && adRef.current.offsetWidth === 0) {
         setAdBlocked(true);
       } else {
         setAdBlocked(false);
@@ -24,7 +25,7 @@ const AdSenseAd = ({ adClient, adSlot }) => {
   return (
     <>
       {adBlocked ? (
-        <div style={{ color: 'red', textAlign: 'center' }}>ADBLOCK</div>
+        <div className="ad-blocked-message">Sin señal</div>
       ) : (
         <Adsense
           ref={adRef}
@@ -32,7 +33,6 @@ const AdSenseAd = ({ adClient, adSlot }) => {
           client={adClient}
           slot={adSlot}
           style={{ display: 'block' }}
-          adTest="on"
         />
       )}
     </>
