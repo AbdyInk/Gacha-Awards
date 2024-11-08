@@ -16,9 +16,9 @@ import ComingSoon from './frontviews/ComingSoon';
 import Form from './subviews/Form';
 
 import Header from './components/Header';
-import Footer from './components/Footer';
 import NotFound from './views/NotFound';
 import IntroVideo from './components/IntroVideo';
+import Favoc from './views/Favoc';
 
 import "./App.css";
 import 'aos/dist/aos.css';
@@ -78,47 +78,20 @@ function App() {
 
   return (
     <>
-      {useFrontView.General ? isAuthorized && (
-        <Header />
-      ): <Header />}
-
-        {useFrontView.General ? (
-          isAuthorized ? (
-            <>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/votar" element={<Voting />} />
-              <Route path="/resultados" element={useFrontView.Results ? <VoteResults_Front /> : <VoteResults />} />
-              <Route path="/create-section" element={<CreateSection />} />
-              <Route path="/edit-section" element={<EditSection />} />
-              <Route path="/form" element={<Form />} />
-
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-            {isFirstVisit && showIntro && <IntroVideo onEnd={handleIntroEnd} />}
-            </>
-          ) : (
-            
-            <Routes>
-              <Route path="/" element={<ComingSoon />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-            
-          ) ): (
-            <>
+      <Header />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/votar" element={<Voting />} />
-            <Route path="/resultados" element={useFrontView.Results ? <VoteResults_Front /> : <VoteResults />} />
+            <Route path="/resultados" element={!isAuthorized ? <VoteResults_Front /> : <VoteResults />} />
             <Route path="/create-section" element={<CreateSection />} />
             <Route path="/edit-section" element={<EditSection />} />
             <Route path="/form" element={<Form />} />
+            <Route path="/favoc" element={<Favoc />} />
 
             <Route path="*" element={<NotFound />} />
             </Routes>
-            {isFirstVisit && showIntro && <IntroVideo onEnd={handleIntroEnd} />}
-            </>
-        )}
+            {//isFirstVisit && showIntro && <IntroVideo onEnd={handleIntroEnd} />
+            }
     </>
   );
 }
