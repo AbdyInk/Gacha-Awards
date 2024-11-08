@@ -92,10 +92,11 @@ function Voting() {
                 </Flex>
             </Box>
           {!hasVoted ? (
-            <Center height="80vh">
+            <Flex className="cajaVotar">
               <Box bg={"#F6E05E"} textAlign="center" p={10} border="4px solid black" borderRadius="lg" boxShadow="lg">
                 <Heading as="h2" size="xl" mb={4}>¡Bienvenido a las votaciones!</Heading>
                 <Text fontSize="lg" mb={4}>Haz clic en el botón de abajo para comenzar a votar!</Text>
+                <Text fontSize="md" color="gray.500" mb={4}>Si no conoces a ningun Gachatuber de una categoria puedes omitir el voto si prefieres</Text>
                 <Button
                   bgColor={"transparent"}
                   onClick={() => navigate('/form')}
@@ -115,10 +116,10 @@ function Voting() {
                   <HiBookOpen color="#FFAA00" size={25} />
                 </Button>
               </Box>
-            </Center>
+            </Flex>
           ) : (
-            <div className="Voting-Container">
-              <Flex mt={3} className='SubContainer'>
+            <Flex className="Voting-Container" justifyContent={"center"} height={"94vh"}>
+              <Flex mt={3} className="Form-Container" bg={"none"} border={"none"}>
                 <Flex className="welcomeCard" mt={4} textAlign="center" direction={"column"}>
                   <div className="header">
                     <Heading bg={"#ED8936"} as="h5" size="md">VOTOS</Heading>
@@ -137,9 +138,9 @@ function Voting() {
                       </div>
                       <div className="container">
                         
-                        <div style={{width: "66%", background: "#816B76", border: "1.5px solid #816B76", margin: "0 0 1vh 0" }}></div>
+                        <div style={{width: "50%", background: "#816B76", border: "1.5px solid #816B76", margin: "0 0 1vh 0" }}></div>
                         <Flex style={{textTransform: "uppercase"}} direction="row">
-                          <Box width={"120%"}>
+                          <Box width={"50%"}>
                             {form.sections[sectionKey].options.map((option, idx) => (
                               <Box key={idx} position="relative">
                                 <label>
@@ -165,7 +166,7 @@ function Voting() {
                                 alignItems={"center"}
                                 justifyContent={"center"}
                                 textAlign={"center"}
-                                width={"40%"}
+                                width={"50%"}
                                 key={idx}
                               >
                                 {option.imageType === 'Avatar' ? (
@@ -175,6 +176,11 @@ function Voting() {
                                 )}
                                 {option.arroba && (
                                   <Text
+                                  as={option.arroba ? 'a' : 'div'}
+                                  href={option.arroba ? `https://youtube.com/@${option.arroba}` : undefined}
+                                  target={option.arroba ? "_blank" : undefined}
+                                  rel={option.arroba ? "noopener noreferrer" : undefined}
+                                    cursor={option.arroba ? "pointer" : "default"}
                                     fontSize={"lg"}
                                     textAlign={"center"}
                                     textTransform={"none"}
@@ -192,14 +198,14 @@ function Voting() {
                             )
                           ))}
                         </Flex>
-                        <div style={{width: "66%", background: "#816B76", border: "1.5px solid #816B76", margin: "0 0 1vh 0" }}></div>
+                        <div style={{width: "50%", background: "#816B76", border: "1.5px solid #816B76", margin: "0 0 1vh 0" }}></div>
                       </div>
                     </Box>
                     <div style={{width: "22vh", background: "white", border: "1px solid white", margin: "2vh 0" }}></div>
                     </>
                 ))}
               </Flex>
-            </div>
+            </Flex>
           )}
         </>
       )}

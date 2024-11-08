@@ -1,7 +1,10 @@
-import { useEffect } from 'react';
-import { Box, Flex, Avatar, Text, Heading } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import { Box, Flex, Avatar, Text, Heading, Button } from '@chakra-ui/react';
 import { FaYoutube } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import { auth, provider } from '../Firebase/firebaseConfig';
+import { signInWithPopup } from 'firebase/auth';
 
 import AdSenseAd from '../components/AdSenseAd';
 
@@ -14,12 +17,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import chepeIcon from '../assets/icons/chepeIcon.png';
 import alexIcon from '../assets/icons/alexIcon.png';
 import kalebIcon from '../assets/icons/kalebIcon.webp';
-import driaxuIcon from '../assets/icons/driaxuIcon.webp';
+import driaxuIcon from '../assets/icons/driaxuIconP.png';
 import driaxuIcon2 from '../assets/icons/driaxuIcon.png';
 import sperIcon from '../assets/icons/sperIcon.png';
 import gatielaIcon from '../assets/icons/gatielaIcon.png';
 import lisaIcon from '../assets/icons/lisaIcon.png';
 import melodiIcon from '../assets/icons/melodiIcon.png';
+import abdyIcon from '../assets/icons/abdyIcon.png';
+import axelIcon from '../assets/icons/axelIcon.png';
+import nettIcon from '../assets/icons/nettIcon.png';
 
 import Tele1 from '../assets/elements/homeTele1.png';
 import Tele2 from '../assets/elements/homeTele2.png';
@@ -28,10 +34,43 @@ function Home() {
   const adClient = "ca-pub-1012030723398759";
   const adSlot1 = "3988797224";
   const adSlot2 = "3163894620";
+  const [user, setUser] = useState(null);
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const navigate = useNavigate();
+
+  const videoUrls = [
+    "https://www.youtube.com/embed/NrMy5MhMncM?si=bS74TQ9zBLsykUyS",
+    "https://www.youtube.com/embed/ZDpqoFpSCyQ?si=ltD-nkrntQOIybQm",
+    "https://www.youtube.com/embed/Nxzsd4eutaI?si=iuDr9CXmjoMVmK1j"
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentVideoIndex((prevIndex) => (prevIndex + 1) % videoUrls.length);
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, [videoUrls.length])
 
   useEffect(() => {
     AOS.init();
   }, []);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleLogin = async () => {
+    try {
+      await signInWithPopup(auth, provider);
+    } catch (error) {
+      console.error('Error during sign-in:', error);
+    }
+  };
 
   return (
     <motion.div
@@ -56,7 +95,7 @@ function Home() {
             <Box mb={5} className="video-container" style={{ border: "4px solid #E18106", outline: "4px solid #7B4300" }}>
               <iframe
                 style={{ width: '100%', height: '100%' }}
-                src="https://www.youtube.com/embed/NrMy5MhMncM?si=bS74TQ9zBLsykUyS"
+                src={videoUrls[currentVideoIndex]}
                 title="YouTube video player"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -64,8 +103,20 @@ function Home() {
               </iframe>
             </Box>
 
+          <Heading as="h2" size="lg" mb={2} color="orange.400" style={{ fontFamily: 'Eracake' }}>⬇️¡Vota ya!⬇️</Heading>
+          <Flex direction="column" alignItems="center" mb={4}>
+          {user ? (
+            <Button borderRadius={"100vh"} border={"3px solid black"} size={"lg"} colorScheme="blue" style={{ fontFamily: 'Eracake' }} onClick={() => navigate('/votar')}>Votar</Button>
+            ) : (
+            <>
+              <Text fontSize="xl" mb={2} color="blue.500" style={{ fontFamily: 'Eracake' }}>¡Inicia sesion para votar!</Text>
+              <Button borderRadius={"100vh"} border={"3px solid black"} size={"lg"} colorScheme="blue" style={{ fontFamily: 'Eracake' }} onClick={handleLogin}>Iniciar sesion</Button>
+            </>
+          )}
+          </Flex>
+
             <Heading as="h1" size="lg" mb={1} color="gray.200" style={{ fontFamily: 'Eracake' }}>PRESENTADOR</Heading>
-            <Flex justifyContent="center" alignItems="center" gap={4} direction={{ base: 'column', sm: 'row' }} mb={2}>
+            <Flex justifyContent="center" alignItems="center" gap={4} direction={{ base: 'column', md: 'row' }} mb={2}>
               <Flex className="Bolp" onClick={() => window.open("https://www.youtube.com/@ChepeTuber", "_blank")}>
                 <img src={chepeIcon} draggable="false" onContextMenu={(e) => e.preventDefault()} />
               </Flex>
@@ -74,18 +125,9 @@ function Home() {
               </Flex>
             </Flex>
 
-            <Box display={"none"}>
-              <Heading as="h1" size="lg" mb={1} color="gray.200" style={{ fontFamily: 'Eracake' }}>PATROCINADO</Heading>
-              <Flex justifyContent="center" alignItems="center" gap={6} direction={{ base: 'column', sm: 'row' }} mb={2}>
-                <Box className="adsense-container-sub" bg={"black"} mb={4} style={{ border: "4px solid red", outline: "6px solid black" }}>
-                  {/* AdSense code goes here */}
-                </Box>
-              </Flex>
-            </Box>
+            <div style={{width: "22vh", background: "white", border: "1px solid white", margin: "2vh 0" }}></div>
 
-            <Heading as="h1" size="lg" mb={1} color="gray.200" style={{ fontFamily: 'Eracake' }}>PARTICIPANTES</Heading>
-
-            <Flex justifyContent="center" alignItems="center" gap={4} direction={{ base: 'column', sm: 'row' }} mb={2}>
+            <Flex justifyContent="center" alignItems="center" gap={4} direction={{ base: 'column', md: 'row' }} mb={2}>
               <Flex className="Bolp" onClick={() => window.open("https://www.youtube.com/@lisasstudio2007", "_blank")}>
                 <img src={lisaIcon} draggable="false" onContextMenu={(e) => e.preventDefault()} />
               </Flex>
@@ -94,9 +136,18 @@ function Home() {
               </Flex>
             </Flex>
 
-            <div style={{width: "22vh", background: "white", border: "1px solid white", margin: "2vh 0" }}></div>
+            <Box display={"none"}>
+              <Heading as="h1" size="lg" mb={1} color="gray.200" style={{ fontFamily: 'Eracake' }}>PATROCINADO</Heading>
+              <Flex justifyContent="center" alignItems="center" gap={6} direction={{ base: 'column', md: 'row' }} mb={2}>
+                <Box className="adsense-container-sub" bg={"black"} mb={4} style={{ border: "4px solid red", outline: "6px solid black" }}>
+                  {/* AdSense code goes here */}
+                </Box>
+              </Flex>
+            </Box>
 
-            <Flex justifyContent="center" alignItems="center" gap={4} direction={{ base: 'column', sm: 'row' }} mb={6}>
+            <Heading as="h1" size="lg" mb={1} color="gray.200" style={{ fontFamily: 'Eracake' }}>PARTICIPANTES</Heading>
+
+            <Flex justifyContent="center" alignItems="center" gap={4} direction={{ base: 'column', md: 'row' }} mb={6}>
 
               <Flex className="Bolp" onClick={() => window.open("https://www.youtube.com/@KaLeBthehawk", "_blank")}>
                 <img src={kalebIcon} draggable="false" onContextMenu={(e) => e.preventDefault()} />
@@ -107,7 +158,7 @@ function Home() {
               </Flex>
 
             </Flex>
-            <Flex justifyContent="center" alignItems="center" gap={4} direction={{ base: 'column', sm: 'row' }} mb={6}>
+            <Flex justifyContent="center" alignItems="center" gap={4} direction={{ base: 'column', md: 'row' }} mb={6}>
 
               <Flex className="Bolp" onClick={() => window.open("https://www.youtube.com/@esperanza291", "_blank")}>
                 <img src={sperIcon} draggable="false" onContextMenu={(e) => e.preventDefault()} />
@@ -118,7 +169,11 @@ function Home() {
               </Flex>
 
             </Flex>
-            <Flex justifyContent="center" alignItems="center" gap={4} direction={{ base: 'column', sm: 'row' }} mb={6}>
+            <Flex justifyContent="center" alignItems="center" gap={4} direction={{ base: 'column', md: 'row' }} mb={6}>
+
+            <Flex className="Bolp" onClick={() => window.open("https://www.youtube.com/@llamandoaleno", "_blank")}>
+                <img src={nettIcon} draggable="false" onContextMenu={(e) => e.preventDefault()} />
+              </Flex>
 
               <Flex className="Bolp" onClick={() => window.open("https://www.youtube.com/@driaxugacha", "_blank")}>
                 <img src={driaxuIcon2} draggable="false" onContextMenu={(e) => e.preventDefault()} />
@@ -126,27 +181,28 @@ function Home() {
 
             </Flex>
 
-              <div style={{width: "22vh", background: "white", border: "1px solid white", margin: "2vh 0" }}></div>
+            <div style={{width: "22vh", background: "white", border: "1px solid white", margin: "2vh 0" }}></div>
 
-            <Box
-              className="developA" 
-              direction={"column"}
-              height={"10vh"}
-              transition={"transform 0.3s ease-in-out"}
-              _hover={{ transform: "scale(1.0)" }}
-              onClick={() => window.open("https://www.youtube.com/@AbdyInk", "_blank")}
-              cursor={"pointer"}
-              >
-              <Flex width={"28vh"} height={"6vh"} direction={"row"} alignItems={"center"} textAlign={"center"} borderRadius={"100vh"} bgGradient="linear(to-r, yellow.200, purple.500)" border="5px solid" borderTop={"none"} borderLeft={"none"} borderColor="purple.800" _hover={{transform: "scale(1.0)"}} className="Bolp">
-          
-              <Avatar borderLeft={"2px solid #8EC6F1"} borderRight={"2px solid #8EC6F1"} ml={"2.5%"} borderColor={"blue.100"} mr={"5%"} name="AbdyInk" src="https://yt3.ggpht.com/m1dOBLr0ELFxnPBDjIBGWEfXgXvLqgMWHKroBO-z0yZhP-19SRPkwvmF0YgciIpc7KcL1p2vCQ=s108-c-k-c0x00ffffff-no-rj" height={"96%"} width={"20%"} />
-              <Text fontSize={"140%"} fontWeight={"bold"} height={"28%"} alignItems={"center"} textAlign={"center"} color={"purple.800"}>@AbdyInk</Text>
+            <Flex justifyContent="center" alignItems="center" gap={4} direction={{ base: 'column', mf: 'row' }} mb={6}>
 
+              <Flex className="Bolp" onClick={() => window.open("https://www.youtube.com/@AbdyInk", "_blank")}>
+                <img src={abdyIcon} draggable="false" onContextMenu={(e) => e.preventDefault()} />
               </Flex>
-              <Flex ml={"22%"} mt={"-3%"} className="litBolp" bgGradient="linear(to-r, blue.200, purple.600)">
-              <Text fontWeight={"bold"} height={"8%"} alignItems={"center"} textAlign={"center"} color={"blue.800"}>Desarrollador</Text>
+
+            </Flex>
+
+            <Heading as="h1" size="lg" mb={1} color="gray.200" style={{ fontFamily: 'Eracake' }}>COLABORADOR</Heading>
+
+            <Flex justifyContent="center" alignItems="center" gap={4} direction={{ base: 'column', md: 'row' }} mb={6}>
+
+              <Flex className="Bolp" onClick={() => window.open("https://www.youtube.com/@AxelWine", "_blank")}>
+                <img src={axelIcon} draggable="false" onContextMenu={(e) => e.preventDefault()} />
               </Flex>
-            </Box>
+
+            </Flex>
+
+            <div style={{width: "22vh", background: "white", border: "1px solid white", margin: "2vh 0" }}></div>
+            
           </Flex>
         </>
       </div>
