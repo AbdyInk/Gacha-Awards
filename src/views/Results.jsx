@@ -15,6 +15,7 @@ function Results() {
   const [user, setUser] = useState(null);
   const [form, setForm] = useState(null);
   const [voteCounts, setVoteCounts] = useState({});
+  const [totalVoters, setTotalVoters] = useState(0);
   const navigate = useNavigate();
   const toast = useToast();
 
@@ -44,6 +45,7 @@ function Results() {
   const fetchVoteCounts = async () => {
     const voteCounts = {};
     const querySnapshot = await getDocs(collection(db, 'votes'));
+    setTotalVoters(querySnapshot.size); // Set the total number of voters
     querySnapshot.forEach((doc) => {
       const data = doc.data();
       Object.keys(data.votes).forEach((section) => {
@@ -96,10 +98,10 @@ function Results() {
           <Flex mt={3} className="Results-SubContainer">
             <Flex className="congratsCard" mt={4} textAlign="center" direction={"column"}>
               <div className="Results-Header">
-                <Heading bg={"#FFC950"} as="h5" size="md">GANADORES</Heading>
+                <Heading bg={"#FFC950"} as="h5" size="md">VOTOS TOTALES</Heading>
               </div>
               <Box justifyContent={"center"} className="container" borderBottom={"0.5vh solid #F6E05E"}>
-                <Text fontSize="2xl">¡Felicidades a los gachatuber de este año 2024!</Text>
+                <Text fontSize="2xl">Total de personas que han votado: {totalVoters}</Text>
               </Box>
             </Flex>
   
@@ -146,8 +148,36 @@ function Results() {
                     option.imageUrl && votes[sectionKey] === option.text && (
                       <Flex direction={"column"} alignItems={"center"} justifyContent={"center"} textAlign={"center"} width={"40%"} key={idx}>
                         <Text color={"gray"}><em>GANADOR:</em></Text>
-                        <Avatar mt={-4} size={"xl"} className="Results-ImageOption" src={option.imageUrl} alt={option.text}/>
-                        <Text fontSize={"sm"} >{option.text}</Text>
+                        {option.imageType === 'Avatar' ? (
+                          <Avatar mt={-4} size={"xl"} className="Results-ImageOption" src={option.imageUrl} alt={option.text} />
+                        ) : option.imageType === 'Embed' ? (
+                          <iframe
+                            className="Results-ImageOption"
+                            src={option.urlEmbed}
+                            title={option.text}
+                            style={{ width: '100%', height: 'auto', borderRadius: '8px' }}
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          />
+                        ) : (
+                          <img className="Results-ImageOption" src={option.imageUrl} alt={option.text} style={{ width: '100%', height: 'auto', borderRadius: '8px' }} />
+                        )}
+                        {option.arroba && (
+                          <Text
+                            fontSize={"lg"}
+                            textAlign={"center"}
+                            textTransform={"none"}
+                            textDecoration={"underline"}
+                            color={"red.500"}
+                            _hover={{ color: "orange.700" }}
+                          >
+                            @{option.arroba}
+                          </Text>
+                        )}
+                        {option.description && (
+                          <Text fontSize={"lg"} textAlign={"center"} textTransform={"none"}>{option.description}</Text>
+                        )}
                       </Flex>
                     )
                     ))}
