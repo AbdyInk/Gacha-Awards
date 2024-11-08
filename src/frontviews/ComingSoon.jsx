@@ -8,6 +8,8 @@ import { db } from '../Firebase/firebaseConfig'; // Asegúrate de tener tu confi
 const ComingSoon = () => {
     const [visitCount, setVisitCount] = useState(null);
     const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+    const [showCountdown, setShowCountdown] = useState(false);
+    const [showSmiley, setShowSmiley] = useState(false);
 
     useEffect(() => {
         const updateVisitCount = async () => {
@@ -37,13 +39,17 @@ const ComingSoon = () => {
     }, []);
 
     useEffect(() => {
-        const targetDate = new Date('2024-11-01T12:00:00-06:00'); // Hora de la Ciudad de México (CST)
+        const targetDate = new Date('2024-11-03T12:00:00-06:00'); // Hora de la Ciudad de México (CST)
         const interval = setInterval(() => {
             const now = new Date();
             const difference = targetDate - now;
 
             if (difference <= 0) {
                 clearInterval(interval);
+                setShowSmiley(true);
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000); // 1 segundo después de mostrar ":)"
             } else {
                 const days = Math.floor(difference / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -65,6 +71,14 @@ const ComingSoon = () => {
         return () => clearTimeout(timer);
     }, []);
 
+    useEffect(() => {
+        const countdownTimer = setTimeout(() => {
+            setShowCountdown(true);
+        }, 2000); // 2 seconds
+
+        return () => clearTimeout(countdownTimer);
+    }, []);
+
     return (
         <Box
             display="flex"
@@ -74,8 +88,18 @@ const ComingSoon = () => {
             backgroundColor="black"
             color="white"
             position="relative"
+            flexDirection="column"
         >
-            <Text className="animate__animated animate__fadeIn animate__slow" fontSize="4xl">MUY PRONTO</Text>
+            <Text position={"fixed"} className="animate__animated animate__fadeIn animate__slow" fontSize="4xl">Gacha Awards 2024</Text>
+            {showCountdown && (
+                <Box
+                    className="animate__animated animate__fadeIn animate__slow"
+                    textAlign="center"
+                    mt={"80px"}
+                >
+                    <Text fontSize="2xl">{showSmiley ? ":)" : `${timeLeft.minutes}m ${timeLeft.seconds}s`}</Text>
+                </Box>
+            )}
             <Box
                 className="animate__animated animate__fadeIn animate__slow"
                 position="absolute"
@@ -86,16 +110,6 @@ const ComingSoon = () => {
             >
                 <Text fontSize="2xl">¿Esperando a que algo suceda?</Text>
             </Box>
-            
-            {/*<Box
-                className="animate__animated animate__fadeIn animate__slow"
-                position="absolute"
-                top="50px"
-                textAlign="center"
-            >
-                
-                <Text fontSize="2xl">{`${timeLeft.days}d ${timeLeft.hours}h ${timeLeft.minutes}m ${timeLeft.seconds}s`}</Text>
-            </Box>*/}
             {visitCount !== null && (
                 <Box
                     className="animate__animated animate__fadeIn animate__slow"
