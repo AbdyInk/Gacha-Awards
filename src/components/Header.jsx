@@ -8,6 +8,8 @@ import { FaHome, FaBars, FaEdit } from 'react-icons/fa';
 import { MdHowToVote, MdLibraryAddCheck, MdOutlineLogout, MdOutlineLogin, MdBarChart  } from "react-icons/md";
 import { HiDocumentAdd } from "react-icons/hi";
 
+import favocIcon from "../assets/elements/favocIcon.png";
+
 import "../styles/Header.css";
 
 const allowedEmails = ['abdyxx@gmail.com', 'jdglezsosa@gmail.com', 'twodiobdoeh@gmail.com'];
@@ -85,7 +87,15 @@ function Header() {
                 Votar
               </Button>
             <div style={{ width: "4px", backgroundColor: '#C95F0E', marginRight: "2vh" }} />
-              <Button as={Link} to="/resultados" colorScheme="gray" variant="ghost" mr={4}
+            <Button as={Link} to="/favoc" colorScheme="gray" variant="ghost" mr={4} pl={10}
+                bg={location.pathname === '/favoc' ? 'yellow.300' : 'transparent'}
+              >
+                
+                <img src={favocIcon} alt="Favoc Icon" style={{ height: '18px', marginRight: '2px', position: "absolute", left: "16%" }} />
+                Favoc
+              </Button>
+              <div style={{ display: "none", width: "4px", backgroundColor: '#C95F0E', marginRight: "2vh" }} />
+             <Button display={"none"} as={Link} to="/resultados" colorScheme="gray" variant="ghost" mr={4}
                 bg={location.pathname === '/resultados' ? 'yellow.300' : 'transparent'}
               >
                 <MdLibraryAddCheck />
@@ -127,7 +137,11 @@ function Header() {
                     <MdHowToVote />
                     Votar
                   </MenuItem>
-                  <MenuItem as={Link} to="/resultados">
+                  <MenuItem as={Link} to="/favoc">
+                  <img src={favocIcon} alt="Favoc Icon" style={{ height: '18px', marginRight: '2px' }} />
+                    Favoc
+                  </MenuItem>
+                  <MenuItem display={"none"} as={Link} to="/resultados">
                     <MdLibraryAddCheck />
                     Resultados
                   </MenuItem>
