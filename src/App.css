@@ -107,3 +107,39 @@ body, html, #root {
     background-size: 300% 90%;
   }
 }
+
+@media (max-height: 384px) {
+  .voting-background {
+    background-size: 300% 90%;
+  }
+}
+
+@media (max-width: 768px){
+  .voting-background{
+    background-size: 200% 90%;
+  }
+}
+
+@media (max-width: 478px) {
+  .voting-background{
+    background-size: 300% 90%;
+  }
+}
+
+@media (max-height: 384px) {
+  .results-background {
+    background-size: 300% 90%;
+  }
+}
+
+@media (max-width: 768px){
+  .results-background{
+    background-size: 200% 90%;
+  }
+}
+
+@media (max-width: 478px) {
+  .results-background{
+    background-size: 300% 90%;
+  }
+}

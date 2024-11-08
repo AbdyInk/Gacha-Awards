@@ -4,6 +4,8 @@
   flex-direction: column;
   align-items: center;
   font-family: Arial, sans-serif;
+  
+  height: 100%;
 }
 
 .developA{
@@ -14,6 +16,7 @@
 
 .SubContainer{
   display: flex;
+  position: fixed;
   justify-self: flex-end;
   flex-direction: column;
   align-items: center;

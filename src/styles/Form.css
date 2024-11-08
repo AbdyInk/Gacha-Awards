@@ -7,7 +7,6 @@
     height: auto;
     max-height: 86%;
     overflow-y: auto;
-    text-align: center;
     padding: 10px;
     border-width: 1px;
     border-radius: 8px;
@@ -175,6 +174,14 @@
     font-size: medium;
   }
 
+  .cajaVotar{
+    height: 80%;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
   @media (max-width: 1150px){
     .Form-Container{
       width: 50%;
@@ -256,5 +263,12 @@
         }
         .textForm{
             font-size: small;
+        }
+
+        .cajaVotar{
+            height: 20%;
+            position: fixed;
+            align-items: flex-start;
+            transform: scale(0.5);
         }
     }
